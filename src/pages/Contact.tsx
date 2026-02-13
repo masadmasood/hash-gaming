@@ -13,7 +13,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,12 +22,11 @@ const Contact = () => {
       return;
     }
     toast.success("Message sent! We'll get back to you soon.");
-    setForm({ name: "", email: "", subject: "", message: "" });
+    setForm({ name: "", email: "", phone: "", subject: "", message: "" });
   };
 
   return (
     <PageTransition>
-      {/* Hero */}
       <section className="py-16 md:py-20">
         <div className="container text-center max-w-2xl mx-auto space-y-4">
           <h1 className="text-4xl md:text-5xl font-gaming-black text-foreground">GET IN TOUCH</h1>
@@ -39,7 +38,6 @@ const Contact = () => {
 
       <div className="container py-12 max-w-5xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left: Contact Info */}
           <div className="space-y-8">
             <div>
               <h2 className="text-xl font-gaming text-foreground mb-2">Contact Information</h2>
@@ -70,7 +68,6 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Right: Form */}
           <Card className="rounded-card border-border bg-card">
             <CardContent className="p-8">
               <h2 className="text-xl font-gaming text-foreground mb-6">Send us a message</h2>
@@ -84,6 +81,10 @@ const Contact = () => {
                     <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Email *</label>
                     <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="rounded-input border-border bg-background h-11" />
                   </div>
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Phone</label>
+                  <Input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="rounded-input border-border bg-background h-11" placeholder="+92 XXX XXXXXXX" />
                 </div>
                 <div>
                   <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Subject</label>
