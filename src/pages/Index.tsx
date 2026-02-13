@@ -89,13 +89,13 @@ const Index = () => {
 
         {/* Trending — with subtitle and bordered "View all" link */}
         <section className="py-16">
-          <div className="container border border-border/40 rounded-card p-6 md:p-8">
+          <div className="container">
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 className="text-2xl font-gaming text-foreground">Trending Products</h2>
                 <p className="text-sm text-muted-foreground mt-1">Our most popular picks this week</p>
               </div>
-              <Link to="/shop" className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1 border border-border rounded-button px-4 py-2 hover:bg-surface">
+              <Link to="/shop" className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1">
                 View all <ArrowRight className="h-3 w-3 ml-1" />
               </Link>
             </div>
@@ -135,7 +135,7 @@ const Index = () => {
                 <p className="text-sm text-muted-foreground mt-1">Save more when you bundle</p>
               </div>
               <Link to="/shop?combo=true" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-                All combos <ArrowRight className="h-3 w-3 ml-1" />
+                View all <ArrowRight className="h-3 w-3 ml-1" />
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -159,7 +159,7 @@ const Index = () => {
         </section>
 
         {/* Why Us */}
-        <section className="py-20">
+        <section className="py-20 bg-card">
           <div className="container">
             <div className="text-center mb-12">
               <h2 className="text-2xl font-gaming text-foreground">Why Hashtech Gaming?</h2>
@@ -180,7 +180,7 @@ const Index = () => {
         </section>
 
         {/* Reviews */}
-        <section className="py-16 bg-surface">
+        <section className="py-16">
           <div className="container">
             <div className="flex items-center justify-between mb-10">
               <div>
@@ -259,24 +259,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20">
-          <div className="container max-w-4xl mx-auto">
-            <div className="rounded-card border border-border p-14 md:p-20 text-center space-y-6">
-              <h2 className="text-3xl md:text-4xl font-gaming text-foreground">Ready to Level Up?</h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
-                Browse our full collection of quality-tested, pre-owned gaming gear at unbeatable prices.
-              </p>
-              <div className="pt-3">
-                <Link to="/shop">
-                  <Button variant="outline" className="h-12 px-8 rounded-button border-border text-foreground hover:bg-surface hover:border-foreground/20 font-semibold">
-                    Explore Shop →
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </PageTransition>
   );
