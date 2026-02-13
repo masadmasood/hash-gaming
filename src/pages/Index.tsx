@@ -127,7 +127,7 @@ const Index = () => {
         </section>
 
         {/* Combo Deals — on surface background to break the rhythm */}
-        <section className="py-16 bg-surface">
+        <section className="py-16">
           <div className="container">
             <div className="flex items-center justify-between mb-10">
               <div>
