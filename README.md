@@ -1,6 +1,6 @@
 # Hashtech Gaming
 
-Premium pre-owned gaming gear in Pakistan.
+Premium pre-owned gaming gear in Pakistani
 
 ## About
 
