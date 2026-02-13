@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
@@ -66,7 +66,7 @@ const Index = () => {
         {/* Hero */}
         <section className="py-20 md:py-28">
           <div className="container text-center max-w-3xl mx-auto space-y-6">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
               USED GAMING GEAR
               <br />
               <span className="text-muted-foreground">TESTED & READY</span>
@@ -74,7 +74,7 @@ const Index = () => {
             <p className="text-base text-muted-foreground max-w-xl mx-auto">
               Premium pre-owned keyboards, mice & headphones from top brands. Every item quality-checked in Karachi.
             </p>
-            <div className="flex items-center justify-center gap-3 pt-2">
+            <div className="flex items-center justify-center gap-3 pt-2 flex-col sm:flex-row">
               <Link to="/shop">
                 <Button className="h-12 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold gap-2">
                   Shop Now <ArrowRight className="h-4 w-4" />
@@ -95,7 +95,7 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {categories.map((cat) => (
                 <Link key={cat} to={`/shop?category=${cat}`}>
-                  <div className="group relative aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
+                  <div className="group relative aspect-square sm:aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
                     <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
@@ -108,7 +108,7 @@ const Index = () => {
                 </Link>
               ))}
               <Link to="/shop?combo=true">
-                <div className="group relative aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
+                <div className="group relative aspect-square sm:aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
                   <img src={productImages[combos[0]?.id] || bannerImage} alt="Combos" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
@@ -145,7 +145,7 @@ const Index = () => {
 
         {/* Mid-page Banner */}
         <section
-          className="relative py-24 md:py-32 bg-fixed bg-cover bg-center"
+          className="relative py-24 md:py-32 bg-cover bg-center bg-scroll md:bg-fixed"
           style={{ backgroundImage: `url(${bannerImage})` }}
         >
           <div className="absolute inset-0 bg-background/50 backdrop-blur-sm" />
@@ -269,7 +269,7 @@ const Index = () => {
               }}
               className="w-full max-w-7xl mx-auto"
             >
-              <div className="flex items-end justify-between mb-10">
+              <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
                 <div className="text-start">
                   <h2 className="text-2xl font-bold text-foreground">What the Squad Says</h2>
                   <p className="text-sm text-muted-foreground mt-1">Join thousands of satisfied gamers in Pakistan.</p>

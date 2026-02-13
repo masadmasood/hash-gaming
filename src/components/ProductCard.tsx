@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { Product, productImages } from "@/data/siteData";
 
@@ -9,7 +10,7 @@ function getConditionStyle(score: number): { label: string; grade: string; color
   return { label: "Fair", grade: `${score}/10`, colorClass: "bg-red-500/10 text-red-600 border-red-500/20" };
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export const ProductCard = memo(function ProductCard({ product }: { product: Product }) {
   const inStock = product.stockQty > 0;
   const condition = getConditionStyle(product.conditionScore);
   const hasDiscount = product.originalPricePKR && product.originalPricePKR > product.pricePKR;
@@ -81,4 +82,4 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
     </Link>
   );
-}
+});

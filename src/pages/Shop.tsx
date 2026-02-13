@@ -1,14 +1,16 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { products, filterCategories, brands } from "@/data/siteData";
 import { ProductCard } from "@/components/ProductCard";
+import { VirtualizedProductGrid } from "@/components/VirtualizedProductGrid";
 import { PageTransition } from "@/components/PageTransition";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { Search } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type SortOption = "newest" | "price-low" | "price-high" | "condition";
 
@@ -26,6 +28,7 @@ const Shop = () => {
   const [showInStock, setShowInStock] = useState(true);
   const [showOutOfStock, setShowOutOfStock] = useState(false);
   const [sort, setSort] = useState<SortOption>("newest");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Sync category from URL when navigating from homepage category links
   useEffect(() => {
@@ -70,12 +73,12 @@ const Shop = () => {
     return result;
   }, [search, selectedCategories, selectedBrands, priceRange, conditionMin, showInStock, showOutOfStock, sort, showCombos]);
 
-  const toggleCategory = (cat: string) => {
+  const toggleCategory = useCallback((cat: string) => {
     setSelectedCategories((prev) => prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]);
-  };
-  const toggleBrand = (brand: string) => {
+  }, []);
+  const toggleBrand = useCallback((brand: string) => {
     setSelectedBrands((prev) => prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]);
-  };
+  }, []);
 
   return (
     <PageTransition>
@@ -85,8 +88,18 @@ const Shop = () => {
         </h1>
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Sidebar Filters */}
-          <aside className="w-full lg:w-64 shrink-0 space-y-6">
-            <div className="bg-card border border-border/50 rounded-card p-5 shadow-sm space-y-6 sticky top-24">
+          <aside className="w-full lg:w-64 shrink-0">
+            {/* Mobile filter toggle */}
+            <Button
+              variant="outline"
+              className="w-full lg:hidden mb-4 rounded-button border-border h-10 gap-2"
+              onClick={() => setFiltersOpen(!filtersOpen)}
+            >
+              {filtersOpen ? <X className="h-4 w-4" /> : <SlidersHorizontal className="h-4 w-4" />}
+              {filtersOpen ? "Hide Filters" : "Show Filters"}
+            </Button>
+            <div className={`${filtersOpen ? "block" : "hidden"} lg:block`}>
+            <div className="bg-card border border-border/50 rounded-card p-5 shadow-sm space-y-6 lg:sticky lg:top-24">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -178,16 +191,17 @@ const Shop = () => {
               </div>
             </div>
             </div>
+            </div>
           </aside>
 
           {/* Products */}
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
               <p className="text-sm text-muted-foreground">
                 Showing {filtered.length} of {products.length} products
               </p>
               <Select value={sort} onValueChange={(v) => setSort(v as SortOption)}>
-                <SelectTrigger className="w-[180px] rounded-input border-border bg-surface h-10">
+                <SelectTrigger className="w-full sm:w-[180px] rounded-input border-border bg-surface h-10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border">
@@ -203,11 +217,7 @@ const Shop = () => {
                 <p>No products found matching your filters.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {filtered.map((p) => (
-                  <ProductCard key={p.id} product={p} />
-                ))}
-              </div>
+              <VirtualizedProductGrid products={filtered} />
             )}
           </div>
         </div>

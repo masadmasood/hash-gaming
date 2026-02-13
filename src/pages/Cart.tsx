@@ -32,16 +32,18 @@ const Cart = () => {
           <div className="lg:col-span-2 space-y-4">
             {items.map(({ product, quantity }) => (
               <Card key={product.id} className="rounded-card border-border bg-card">
-                <CardContent className="p-4 flex gap-4">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden bg-surface shrink-0">
-                    <img src={product.images[0]} alt={product.title} className="h-full w-full object-cover" />
+                <CardContent className="p-4 flex flex-col sm:flex-row gap-4">
+                  <div className="flex gap-4 flex-1 min-w-0">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-surface shrink-0">
+                      <img src={product.images[0]} alt={product.title} className="h-full w-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <Link to={`/product/${product.id}`} className="text-sm font-semibold text-foreground hover:underline line-clamp-1">{product.title}</Link>
+                      <p className="text-xs text-muted-foreground mt-0.5">{product.brand}</p>
+                      <p className="text-sm font-semibold text-foreground mt-1">PKR {product.pricePKR.toLocaleString()}</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <Link to={`/product/${product.id}`} className="text-sm font-semibold text-foreground hover:underline line-clamp-1">{product.title}</Link>
-                    <p className="text-xs text-muted-foreground mt-0.5">{product.brand}</p>
-                    <p className="text-sm font-semibold text-foreground mt-1">PKR {product.pricePKR.toLocaleString()}</p>
-                  </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 self-end sm:self-center">
                     <div className="flex items-center border border-border rounded-button">
                       <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => updateQuantity(product.id, quantity - 1)}>
                         <Minus className="h-3 w-3" />

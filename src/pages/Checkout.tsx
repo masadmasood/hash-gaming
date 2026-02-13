@@ -130,7 +130,7 @@ const Checkout = () => {
                   </CardContent>
                 </Card>
 
-                <Button type="submit" className="w-full h-12 rounded-button bg-foreground text-background hover:bg-foreground/80 font-medium text-base" disabled={!form.formState.isValid}>
+                <Button type="submit" className="w-full h-12 rounded-button bg-foreground text-background hover:bg-foreground/80 font-medium text-sm sm:text-base whitespace-nowrap" disabled={!form.formState.isValid}>
                   Place Order — PKR {subtotal.toLocaleString()}
                 </Button>
               </form>

@@ -44,7 +44,7 @@ const About = () => {
               <span>Built by Gamers, For Gamers</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
               LEVELING THE <br />
               <span className="text-muted-foreground">PLAYING FIELD</span>
             </h1>
@@ -113,7 +113,7 @@ const About = () => {
         <section className="py-24 relative">
           <div className="container">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-gaming-black text-foreground mb-4">WHY US?</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-gaming-black text-foreground mb-4">WHY US?</h2>
               <p className="text-muted-foreground max-w-lg mx-auto">Standard setting quality control for the peace of mind you deserve.</p>
             </div>
             
@@ -169,13 +169,13 @@ const About = () => {
         {/* CTA */}
         <section className="py-24">
         
-            <div className="min-h-[450px] w-[1000px] mx-auto flex flex-col justify-center items-center rounded-card bg-gradient-to-r from-secondary to-secondary/30 border border-border/50 p-12 text-center overflow-hidden relative">
+            <div className="min-h-[350px] sm:min-h-[450px] w-full max-w-[1000px] mx-auto flex flex-col justify-center items-center rounded-card bg-gradient-to-r from-secondary to-secondary/30 border border-border/50 p-6 sm:p-8 md:p-12 text-center overflow-hidden relative">
               <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
                 <Gamepad2 className="w-64 h-64" />
               </div>
               
               <div className="relative z-10 max-w-2xl mx-auto space-y-8">
-                <h2 className="text-4xl md:text-5xl font-gaming-black text-foreground">READY TO LEVEL UP?</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-gaming-black text-foreground">READY TO LEVEL UP?</h2>
                 <p className="text-lg text-muted-foreground">
                   Browse our full collection of quality-tested, pre-owned gaming gear at unbeatable prices.
                 </p>

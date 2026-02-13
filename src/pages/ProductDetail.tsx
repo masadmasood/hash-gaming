@@ -74,7 +74,7 @@ const ProductDetail = () => {
               <p className="text-sm text-muted-foreground mb-1">{product.brand} · {product.category}</p>
               <h1 className="text-3xl font-gaming text-foreground">{product.title}</h1>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap">
               <span className="text-2xl font-semibold text-foreground">PKR {product.pricePKR.toLocaleString()}</span>
               <span className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-button border border-condition/40 text-condition">
                 {condition.label} · {condition.grade}
@@ -97,7 +97,7 @@ const ProductDetail = () => {
             )}
             <Separator className="bg-border" />
             {inStock && (
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center border border-border rounded-button">
                   <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => setQty(Math.max(1, qty - 1))} disabled={qty <= 1}>
                     <Minus className="h-4 w-4" />
@@ -110,10 +110,10 @@ const ProductDetail = () => {
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
-                <Button onClick={handleAddToCart} className="h-11 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 gap-2 font-semibold">
+                <Button onClick={handleAddToCart} className="h-11 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 gap-2 font-semibold flex-1 sm:flex-none">
                   <ShoppingCart className="h-4 w-4" /> Add to Cart
                 </Button>
-                <Button onClick={handleBuyNow} variant="outline" className="h-11 px-6 rounded-button border-border hover:bg-surface">
+                <Button onClick={handleBuyNow} variant="outline" className="h-11 px-6 rounded-button border-border hover:bg-surface flex-1 sm:flex-none">
                   Buy Now
                 </Button>
               </div>
@@ -123,7 +123,7 @@ const ProductDetail = () => {
 
         {/* Tabs */}
         <Tabs defaultValue="description" className="mt-12">
-          <TabsList className="bg-surface border border-border rounded-button">
+          <TabsList className="bg-surface border border-border rounded-button w-full sm:w-auto">
             <TabsTrigger value="description" className="rounded-button data-[state=active]:bg-card">Description</TabsTrigger>
             <TabsTrigger value="specs" className="rounded-button data-[state=active]:bg-card">Specs</TabsTrigger>
             <TabsTrigger value="reviews" className="rounded-button data-[state=active]:bg-card">Reviews ({productReviews.length})</TabsTrigger>
