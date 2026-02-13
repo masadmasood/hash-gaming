@@ -25,7 +25,7 @@ export function Header() {
       <header className="sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="container h-full flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-lg font-gaming font-bold tracking-tight text-foreground">
+            <span className="text-xl font-gaming font-bold tracking-wider text-foreground uppercase">
               Hashtech Gaming
             </span>
           </Link>
@@ -55,7 +55,7 @@ export function Header() {
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
                 {totalItems > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-neon-cyan text-black text-[10px] font-bold flex items-center justify-center p-0 border-0">
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-accent text-accent-foreground text-[10px] font-bold flex items-center justify-center p-0 border-0">
                     {totalItems}
                   </Badge>
                 )}
