@@ -199,8 +199,8 @@ const Index = () => {
             <h2 className="text-2xl font-gaming text-foreground mb-10">Why Hashtech Gaming?</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {whyUs.map((item) => (
-                <div key={item.title} className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center shrink-0 mt-0.5">
+                <div key={item.title} className="space-y-3">
+                  <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center">
                     <item.icon className="h-5 w-5 text-muted-foreground" />
                   </div>
                   <div>
