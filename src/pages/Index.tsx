@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { PageTransition } from "@/components/PageTransition";
+import bannerImage from "@/assets/banner-arrivals.jpg";
 import { products, reviews, categories } from "@/data/products";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight, Zap, Award, Headphones } from "lucide-react";
@@ -107,20 +108,22 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Mid-page Banner */}
-        <section className="py-6">
-          <div className="container">
-            <div className="rounded-card border border-border bg-surface p-8 md:p-10 text-center space-y-3">
-              <h3 className="font-gaming text-foreground text-xl">New Arrivals Every Week</h3>
-              <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-                We source fresh inventory from top gaming brands weekly. Follow us to never miss a drop.
-              </p>
-              <Link to="/shop">
-                <Button variant="outline" className="rounded-button border-border text-foreground hover:bg-card mt-2">
-                  Browse New Stock →
-                </Button>
-              </Link>
-            </div>
+        {/* Mid-page Banner - Full width parallax */}
+        <section
+          className="relative py-24 md:py-32 bg-fixed bg-cover bg-center"
+          style={{ backgroundImage: `url(${bannerImage})` }}
+        >
+          <div className="absolute inset-0 bg-background/70" />
+          <div className="relative z-10 container text-center space-y-4">
+            <h3 className="font-gaming-black text-foreground text-2xl md:text-3xl">New Arrivals Every Week</h3>
+            <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+              We source fresh inventory from top gaming brands weekly. Follow us to never miss a drop.
+            </p>
+            <Link to="/shop">
+              <Button variant="outline" className="rounded-button border-foreground/20 text-foreground hover:bg-foreground/10 mt-3">
+                Browse New Stock →
+              </Button>
+            </Link>
           </div>
         </section>
 
