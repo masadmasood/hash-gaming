@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Product } from "@/data/products";
 
-function getConditionGrade(score: number): { label: string; grade: string; colorClass: string } {
-  if (score >= 9) return { label: "Excellent", grade: "9/10", colorClass: "text-condition-excellent border-condition-excellent/30" };
-  if (score >= 7) return { label: "Very Good", grade: `${score}/10`, colorClass: "text-condition-verygood border-condition-verygood/30" };
-  return { label: "Good", grade: `${score}/10`, colorClass: "text-condition-good border-condition-good/30" };
+function getConditionGrade(score: number): { label: string; grade: string } {
+  if (score >= 9) return { label: "Excellent", grade: "9/10" };
+  if (score >= 7) return { label: "Very Good", grade: `${score}/10` };
+  return { label: "Good", grade: `${score}/10` };
 }
 
 export function ProductCard({ product }: { product: Product }) {
@@ -21,9 +21,9 @@ export function ProductCard({ product }: { product: Product }) {
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
-          {/* Condition badge - visible on hover only */}
+          {/* Condition badge - visible on hover */}
           <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-button border bg-card/90 backdrop-blur-sm ${condition.colorClass}`}>
+            <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-button border border-condition/40 text-condition bg-background/80 backdrop-blur-sm">
               {condition.label} · {condition.grade}
             </span>
           </div>
