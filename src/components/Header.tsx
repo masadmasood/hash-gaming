@@ -11,7 +11,6 @@ const shopCategories = [
   { name: "Keyboards", icon: Keyboard, to: "/shop?category=Keyboards" },
   { name: "Mouse", icon: Mouse, to: "/shop?category=Mouse" },
   { name: "Headphones", icon: Headphones, to: "/shop?category=Headphones" },
-  { name: "All Products", icon: null, to: "/shop" },
 ];
 
 export function Header() {
@@ -64,7 +63,7 @@ export function Header() {
               </Link>
               {megaOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
-                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-card p-3 w-[200px] space-y-0.5">
+                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-card p-1 w-[200px] space-y-0.5">
                     {shopCategories.map((cat) => (
                       <Link
                         key={cat.name}
@@ -72,8 +71,7 @@ export function Header() {
                         onClick={() => setMegaOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 rounded-button text-sm text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
                       >
-                        {cat.icon && <cat.icon className="h-4 w-4" />}
-                        {!cat.icon && <span className="w-4" />}
+                        <cat.icon className="h-4 w-4" />
                         {cat.name}
                       </Link>
                     ))}
@@ -81,6 +79,14 @@ export function Header() {
                 </div>
               )}
             </div>
+            <Link
+              to="/about"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === "/about" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              About
+            </Link>
             <Link
               to="/contact"
               className={`text-sm font-medium transition-colors ${
@@ -119,6 +125,7 @@ export function Header() {
                     {[
                       { label: "Home", to: "/" },
                       { label: "Shop", to: "/shop" },
+                      { label: "About", to: "/about" },
                       { label: "Contact", to: "/contact" },
                     ].map((link) => (
                       <Link

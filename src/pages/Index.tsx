@@ -9,9 +9,11 @@ import catHeadphones from "@/assets/cat-headphones.jpg";
 import { products, reviews, categories } from "@/data/products";
 import { productImages } from "@/data/productImages";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight, Plus, Minus, Send } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const categoryImages: Record<string, string> = {
   Keyboards: catKeyboards,
@@ -32,9 +34,20 @@ const whyUs = [
 
 const Index = () => {
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
 
   const nextReview = () => setReviewIndex((i) => (i + 1) % displayReviews.length);
   const prevReview = () => setReviewIndex((i) => (i - 1 + displayReviews.length) % displayReviews.length);
+
+  const handleNewsletter = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    toast.success("Thanks for subscribing! 🎮");
+    setNewsletterEmail("");
+  };
 
   return (
     <PageTransition>
@@ -65,13 +78,13 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Categories — Overlay cards, compact visual */}
+        {/* Categories */}
         <section className="pb-20">
           <div className="container">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {categories.map((cat) => (
                 <Link key={cat} to={`/shop?category=${cat}`}>
-                  <div className="group relative aspect-[16/9] rounded-card overflow-hidden cursor-pointer">
+                  <div className="group relative aspect-[16/9] rounded-card overflow-hidden cursor-pointer border border-border/30">
                     <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-background/50 group-hover:bg-background/30 transition-colors duration-300" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
@@ -87,7 +100,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Trending — with subtitle and bordered "View all" link */}
+        {/* Trending */}
         <section className="py-16">
           <div className="container">
             <div className="flex items-center justify-between mb-10">
@@ -107,7 +120,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Mid-page Banner — Full width parallax */}
+        {/* Mid-page Banner */}
         <section
           className="relative py-24 md:py-32 bg-fixed bg-cover bg-center"
           style={{ backgroundImage: `url(${bannerImage})` }}
@@ -126,7 +139,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Combo Deals — on surface background to break the rhythm */}
+        {/* Combo Deals */}
         <section className="py-16">
           <div className="container">
             <div className="flex items-center justify-between mb-10">
@@ -141,7 +154,7 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {combos.map((combo) => (
                 <Link key={combo.id} to={`/product/${combo.id}`} className="block h-full">
-                  <Card className="rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
+                  <Card className="rounded-card border-border/30 bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
                     <div className="aspect-[4/3] bg-background relative overflow-hidden rounded-t-card">
                       <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
                       <span className="absolute top-3 left-3 inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>
@@ -198,7 +211,7 @@ const Index = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {displayReviews.map((review) => (
-                <div key={review.id} className="relative p-6 rounded-card border border-border bg-card flex flex-col justify-between">
+                <div key={review.id} className="relative p-6 rounded-card border border-border/30 bg-card flex flex-col justify-between">
                   <div className="absolute top-4 right-4 opacity-[0.06]">
                     <Quote className="h-12 w-12 text-foreground" />
                   </div>
@@ -213,7 +226,7 @@ const Index = () => {
                     </div>
                     <p className="text-sm text-muted-foreground leading-relaxed italic">"{review.text}"</p>
                   </div>
-                  <div className="flex items-center gap-3 mt-5 pt-4 border-t border-border">
+                  <div className="flex items-center gap-3 mt-5 pt-4 border-t border-border/30">
                     <div className="h-9 w-9 rounded-full bg-surface-2 overflow-hidden">
                       <img src={review.image} alt={review.name} className="h-full w-full object-cover" />
                     </div>
@@ -228,6 +241,7 @@ const Index = () => {
           </div>
         </section>
 
+        {/* FAQ */}
         <section className="py-20">
           <div className="container max-w-3xl mx-auto">
             <div className="text-center mb-12">
@@ -242,20 +256,43 @@ const Index = () => {
                 { q: "How long does delivery take?", a: "Delivery takes 2–5 business days depending on your city. We ship nationwide across Pakistan with tracking on every order." },
                 { q: "Can I pay cash on delivery?", a: "Yes, we support Cash on Delivery (COD) for all orders within Pakistan. Online payment options are also available." },
               ].map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border bg-card px-6 data-[state=open]:border-foreground/20 transition-all duration-200">
-                  <AccordionTrigger className="py-5 text-[15px] font-medium text-foreground hover:no-underline [&>svg]:hidden">
+                <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border/30 bg-card px-6 data-[state=open]:border-foreground/20 transition-all duration-200">
+                  <AccordionTrigger className="py-5 text-[15px] text-foreground hover:no-underline [&>svg]:hidden font-['Inter',sans-serif] font-normal">
                     <span className="text-left">{faq.q}</span>
                     <div className="ml-4 shrink-0">
                       <Plus className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:hidden" />
                       <Minus className="h-4 w-4 text-muted-foreground transition-transform duration-200 hidden group-data-[state=open]:block" />
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-5 text-sm text-muted-foreground leading-relaxed">
+                  <AccordionContent className="pb-5 text-sm text-muted-foreground leading-relaxed font-['Inter',sans-serif]">
                     {faq.a}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+        </section>
+
+        {/* Newsletter */}
+        <section className="py-20 bg-card">
+          <div className="container max-w-2xl mx-auto text-center space-y-6">
+            <h2 className="text-2xl font-gaming text-foreground">Stay in the Loop</h2>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto">
+              Subscribe to get notified about new drops, exclusive combo deals, and gaming gear restocks.
+            </p>
+            <form onSubmit={handleNewsletter} className="flex items-center gap-3 max-w-md mx-auto">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                className="rounded-button border-border bg-background h-11 flex-1"
+              />
+              <Button type="submit" className="h-11 px-5 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold shrink-0">
+                <Send className="h-4 w-4 mr-2" />
+                Subscribe
+              </Button>
+            </form>
           </div>
         </section>
 
