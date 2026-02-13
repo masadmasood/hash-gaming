@@ -285,18 +285,17 @@ const Index = () => {
               <CarouselContent>
                 {reviews.map((review) => (
                   <CarouselItem key={review.id} className="basis-full sm:basis-1/2 lg:basis-1/3 p-2">
-                    <div className="h-full p-6 md:p-8 rounded-card bg-secondary/10 border border-border/30 hover:bg-secondary/20 transition-all duration-300 flex flex-col relative overflow-hidden group">
-                      <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
-                      <div className="flex gap-1 mb-6">
+                    <div className="h-full rounded-2xl bg-card/80 backdrop-blur-xl border border-border/20 p-7 md:p-8 flex flex-col relative overflow-hidden group transition-all duration-500 hover:border-border/40 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-0.5">
+                      <div className="flex gap-0.5 mb-5">
                         {Array.from({ length: review.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-orange-500 text-orange-500" />
+                          <Star key={i} className="w-3.5 h-3.5 fill-foreground/80 text-foreground/80" />
                         ))}
                       </div>
-                      <p className="text-muted-foreground leading-relaxed mb-8 flex-1 relative z-10 font-normal text-sm">
-                        "{review.text}"
+                      <p className="text-foreground/70 leading-[1.7] mb-7 flex-1 relative z-10 font-normal text-[15px] tracking-[-0.01em]">
+                        {review.text}
                       </p>
-                      <div className="flex items-center gap-4 mt-auto">
-                        <div className="w-10 h-10 rounded-full overflow-hidden border border-border bg-surface">
+                      <div className="flex items-center gap-3.5 mt-auto pt-5 border-t border-border/10">
+                        <div className="w-9 h-9 rounded-full overflow-hidden bg-secondary ring-1 ring-border/10">
                           <img
                             src={review.image}
                             alt={review.name}
@@ -305,9 +304,9 @@ const Index = () => {
                           />
                         </div>
                         <div>
-                          <h4 className="font-bold text-foreground text-sm">{review.name}</h4>
-                          <span className="text-xs text-primary font-medium flex items-center gap-1">
-                            <ShieldCheck className="w-3 h-3" /> Verified Buyer
+                          <h4 className="font-semibold text-foreground text-[13px] tracking-[-0.01em]">{review.name}</h4>
+                          <span className="text-[11px] text-muted-foreground font-medium tracking-wide uppercase">
+                            Verified Buyer
                           </span>
                         </div>
                       </div>
