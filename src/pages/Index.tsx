@@ -6,9 +6,8 @@ import { products, reviews, categories } from "@/data/products";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Keyboard, Mouse, Headphones, ShieldCheck, PackageCheck, Truck, Star, ArrowRight } from "lucide-react";
+import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight } from "lucide-react";
 
-const categoryIcons: Record<string, typeof Keyboard> = { Keyboards: Keyboard, Mouse: Mouse, Headphones: Headphones };
 const categoryImages: Record<string, string> = {
   Keyboards: "/placeholder.svg",
   Mouse: "/placeholder.svg",
@@ -61,27 +60,22 @@ const Index = () => {
           <div className="container">
             <h2 className="text-2xl font-bold mb-8 text-foreground font-gaming">Browse Categories</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {categories.map((cat) => {
-                const Icon = categoryIcons[cat];
-                return (
+              {categories.map((cat) => (
                   <Link key={cat} to={`/shop?category=${cat}`}>
                     <Card className="group rounded-card border-border bg-card hover:-translate-y-1 hover:border-neon-cyan/20 hover:shadow-[0_4px_24px_hsl(185_80%_55%/0.08)] transition-all duration-200 cursor-pointer overflow-hidden relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <CardContent className="flex items-center gap-4 p-6 relative z-10">
-                        <div className="h-14 w-14 rounded-lg bg-surface-2 border border-border flex items-center justify-center group-hover:border-neon-cyan/20 transition-colors">
-                          <Icon className="h-6 w-6 text-neon-cyan" />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-foreground font-gaming">{cat}</h3>
-                          <p className="text-sm text-muted-foreground">
+                      <div className="aspect-[4/3] bg-surface-2 overflow-hidden relative">
+                        <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute bottom-0 left-0 p-4">
+                          <h3 className="font-semibold text-foreground font-gaming text-lg">{cat}</h3>
+                          <p className="text-sm text-foreground/70">
                             {products.filter((p) => p.category === cat && !p.isCombo).length} products
                           </p>
                         </div>
-                      </CardContent>
+                      </div>
                     </Card>
                   </Link>
-                );
-              })}
+              ))}
             </div>
           </div>
         </section>
