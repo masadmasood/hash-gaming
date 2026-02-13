@@ -127,46 +127,23 @@ const Index = () => {
         {/* Combo Deals */}
         <section className="py-12">
           <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-gaming text-foreground">Combo Deals</h2>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={prevCombo}
-                  className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-surface transition-colors"
-                >
-                  <ChevronLeft className="h-4 w-4 text-foreground" />
-                </button>
-                <button
-                  onClick={nextCombo}
-                  className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-surface transition-colors"
-                >
-                  <ChevronRight className="h-4 w-4 text-foreground" />
-                </button>
-              </div>
-            </div>
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-300 ease-out gap-4"
-                style={{ transform: `translateX(-${comboIndex * (100 / 3 + 1.5)}%)` }}
-              >
-                {combos.map((combo) => (
-                  <div key={combo.id} className="min-w-[calc(33.333%-11px)] flex-shrink-0">
-                    <Link to={`/product/${combo.id}`} className="block h-full">
-                      <Card className="rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
-                        <div className="aspect-[4/3] bg-surface relative overflow-hidden rounded-t-card">
-                          <img src={combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
-                          <span className="absolute top-3 left-3 inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>
-                        </div>
-                        <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
-                          <h3 className="font-semibold text-sm text-foreground">{combo.title}</h3>
-                          <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{combo.comboItems?.join(" + ")}</p>
-                          <p className="font-semibold text-foreground">PKR {combo.pricePKR.toLocaleString()}</p>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+            <h2 className="text-2xl font-gaming text-foreground mb-8">Combo Deals</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {combos.map((combo) => (
+                <Link key={combo.id} to={`/product/${combo.id}`} className="block h-full">
+                  <Card className="rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
+                    <div className="aspect-[4/3] bg-surface relative overflow-hidden rounded-t-card">
+                      <img src={combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
+                      <span className="absolute top-3 left-3 inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>
+                    </div>
+                    <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
+                      <h3 className="font-semibold text-sm text-foreground">{combo.title}</h3>
+                      <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{combo.comboItems?.join(" + ")}</p>
+                      <p className="font-semibold text-foreground">PKR {combo.pricePKR.toLocaleString()}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
