@@ -31,7 +31,7 @@ Hashtech Gaming is an e-commerce platform specializing in high-quality, pre-owne
 
 ```
 src/
-├── components/          # Reusable UI components
+├── components/          # Reusable UI componentss
 │   ├── ui/             # shadcn/ui components
 │   └── ...             # Custom components (Header, Footer, etc.)
 ├── pages/              # Page components
