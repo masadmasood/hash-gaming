@@ -1,7 +1,6 @@
 import { PageTransition } from "@/components/PageTransition";
 import { Separator } from "@/components/ui/separator";
 import { exchangeHighlight, exchangeEligibility, exchangeNonEligible, whatsappLink, whatsappNumber, supportEmail } from "@/data/siteData";
-import { MessageCircle, Mail } from "lucide-react";
 
 const ExchangePolicy = () => (
   <PageTransition>
@@ -56,23 +55,19 @@ const ExchangePolicy = () => (
           </h2>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>Please contact our support team immediately if you encounter an issue.</p>
-            <div className="flex flex-col sm:flex-row gap-3">
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all group flex-1">
-                    <div className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center shrink-0">
-                      <MessageCircle className="h-5 w-5 text-foreground" />
-                    </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all group">
+                    <span className="bg-green-500/10 text-green-600 font-bold p-2 rounded-full">WA</span>
                     <div>
-                        <div className="font-bold text-foreground text-sm">WhatsApp Support</div>
-                        <div className="text-xs text-muted-foreground">{whatsappNumber}</div>
+                        <div className="font-bold text-foreground">WhatsApp Support</div>
+                        <div className="text-sm">{whatsappNumber}</div>
                     </div>
                 </a>
-                <a href={`mailto:${supportEmail}`} className="flex items-center gap-3 p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all group flex-1">
-                    <div className="h-10 w-10 rounded-full bg-secondary flex items-center justify-center shrink-0">
-                      <Mail className="h-5 w-5 text-foreground" />
-                    </div>
+                <a href={`mailto:${supportEmail}`} className="flex items-center gap-3 p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all group">
+                    <span className="bg-blue-500/10 text-blue-600 font-bold p-2 rounded-full">@</span>
                     <div>
-                        <div className="font-bold text-foreground text-sm">Email Support</div>
-                        <div className="text-xs text-muted-foreground">{supportEmail}</div>
+                        <div className="font-bold text-foreground">Email Support</div>
+                        <div className="text-sm">{supportEmail}</div>
                     </div>
                 </a>
             </div>

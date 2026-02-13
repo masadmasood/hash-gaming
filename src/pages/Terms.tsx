@@ -1,17 +1,13 @@
 import { PageTransition } from "@/components/PageTransition";
 import { Separator } from "@/components/ui/separator";
 import { termsAndConditions, termsFooter } from "@/data/siteData";
-import { FileText } from "lucide-react";
 
 const Terms = () => (
   <PageTransition>
     <div className="container py-16 max-w-4xl mx-auto">
       <div className="text-center mb-12">
-        <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-secondary mb-4 mx-auto">
-          <FileText className="h-6 w-6 text-foreground" />
-        </div>
-        <h1 className="text-4xl font-extrabold tracking-tight text-foreground mb-4">Terms & Conditions</h1>
-        <p className="text-muted-foreground text-lg max-w-xl mx-auto">Please read these terms carefully before using our services.</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-foreground mb-4">Terms of Service</h1>
+        <p className="text-muted-foreground text-lg">Please read these terms carefully before using our services.</p>
       </div>
       
       <div className="bg-card border border-border/50 rounded-card p-8 md:p-12 space-y-10 shadow-sm">
@@ -25,10 +21,10 @@ const Terms = () => (
               <div className="space-y-3 text-muted-foreground leading-relaxed">
                 <p>{section.content}</p>
                 {section.list && (
-                  <ul className="list-disc pl-6 space-y-1.5">
+                  <ul className="list-disc pl-6 space-y-1">
                     {section.list.map((item, j) => (
                       <li key={j}>
-                        {section.title.includes("Grading") || section.title.includes("Condition") ? (
+                        {section.title.includes("Grading") ? (
                           <><strong className="text-foreground">{item.split(":")[0]}:</strong>{item.substring(item.indexOf(":") + 1)}</>
                         ) : item}
                       </li>

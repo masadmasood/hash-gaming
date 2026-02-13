@@ -103,6 +103,7 @@ export const productImages: Record<string, string> = {
   "combo-2": prodCombo2,
   "combo-3": prodCombo3,
   "combo-4": prodCombo4,
+  // combo-5 and combo-6 reuse existing images
   "combo-5": prodCombo1,
   "combo-6": prodCombo2,
 };
@@ -511,70 +512,70 @@ export const reviews: Review[] = [
     name: "Ahmed K.",
     rating: 5,
     text: "The keyboard I bought was listed as 8/10 but honestly looks brand new. Fast delivery to Lahore too!",
-    image: prodKb1,
+    image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r2",
     name: "Sara M.",
     rating: 5,
     text: "Got a Razer Viper Ultimate. Battery life is amazing and condition is perfect. Highly recommended for competitive gamers.",
-    image: prodMs1,
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r3",
     name: "Bilal R.",
     rating: 4,
     text: "Good packaging and genuine product. The mouse had a tiny scratch as described, but works perfectly.",
-    image: prodMs2,
+    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r4",
     name: "Zainab A.",
     rating: 5,
     text: "Best place for used gear. The headphones were clean and sound crisp. Will definitely buy again.",
-    image: prodHp1,
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r5",
     name: "Omar F.",
     rating: 5,
     text: "Customer support on WhatsApp is very responsive. They helped me choose the right keyboard switch.",
-    image: prodKb2,
+    image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r6",
     name: "Hassan T.",
     rating: 4,
     text: "Delivery took 4 days to Multan, but the product quality made it worth the wait. Solid packaging.",
-    image: prodHp2,
+    image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r7",
     name: "Usman G.",
     rating: 5,
     text: "Found a rare discontinued mouse here. Condition was even better than the photos. 10/10 experience.",
-    image: prodMs3,
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r8",
     name: "Fatima S.",
     rating: 5,
     text: "Was skeptical about buying used, but the 3-day check warranty gave me peace of mind. Everything works great.",
-    image: prodHp3,
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r9",
     name: "Kamran J.",
     rating: 5,
     text: "Combo deal saved me 5k compared to market prices. The keyboard and mouse sync perfectly.",
-    image: prodCombo1,
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&q=80",
   },
   {
     id: "r10",
     name: "Ali H.",
     rating: 4,
     text: "Authentic gear. The box was a bit damaged but the headset itself was pristine. Good value.",
-    image: prodHp4,
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&q=80",
   },
 ];
 
@@ -609,11 +610,11 @@ export const contactInfo: ContactDetail[] = [
   { type: "location", label: "Location", value: "Karachi, Pakistan" },
   { type: "email", label: "Email", value: "hammadparekh52@gmail.com" },
   { type: "phone", label: "Phone", value: "0313-2153277" },
-  { type: "hashtag", label: "Instagram", value: "@hashtechgaming" },
+  { type: "hashtag", label: "Hashtag", value: "@hashtechgaming" },
 ];
 
 export const supportHours = "Monday–Saturday, 10:00 AM – 8:00 PM (PKT)";
-export const supportEmail = "hammadparekh52@gmail.com";
+export const supportEmail = "support@hashtech.pk";
 export const whatsappNumber = "+923132153277";
 export const whatsappLink = `https://wa.me/${whatsappNumber.replace("+", "")}`;
 export const instagramLink = "https://instagram.com/hashtechgaming";
@@ -622,113 +623,75 @@ export const instagramLink = "https://instagram.com/hashtechgaming";
 
 export const privacyPolicy: PolicySection[] = [
   {
-    title: "Information We Collect",
-    content: "When you place an order or interact with our services, we may collect the following personal information:",
-    list: [
-      "Full name and delivery address",
-      "Phone number and email address",
-      "Order history and product preferences",
-      "Device information and browser type (automatically collected)",
-      "IP address and approximate location for fraud prevention",
-    ],
+    title: "Data Collection",
+    content: "We collect information that you provide specifically for the purpose of processing your order. This typically includes your:",
+    list: ["Full Name", "Delivery Address", "Phone Number", "Email Address"],
   },
   {
-    title: "How We Use Your Information",
-    content: "We use your personal data strictly for legitimate business purposes:",
+    title: "Usage of Information",
+    content: "Your data is used strictly for:",
     list: [
-      "Processing, fulfilling, and shipping your orders via our courier partners (TCS, Leopard, etc.)",
-      "Sending order confirmations, tracking updates, and delivery notifications",
-      "Providing customer support and handling exchange/return requests",
-      "Improving our website experience and product recommendations",
-      "Preventing fraud and ensuring account security",
+      "Processing and delivering your order via our courier partners.",
+      "Communicating order status updates.",
+      "Providing customer support if issues arise.",
     ],
-  },
-  {
-    title: "Data Sharing & Third Parties",
-    content: "We do NOT sell, trade, or rent your personal information to third parties. Your data may only be shared with trusted courier partners solely for delivery purposes. We may also share data if required by Pakistani law or to protect our legal rights.",
   },
   {
     title: "Data Security",
-    content: "We implement industry-standard security measures to protect your personal information. This includes encrypted data transmission, secure storage practices, and restricted access controls. While no method of transmission over the Internet is 100% secure, we strive to use commercially acceptable means to protect your data.",
-  },
-  {
-    title: "Cookies & Tracking",
-    content: "Our website may use essential cookies to maintain your shopping cart and session. We do not use third-party advertising trackers. Analytics data, if collected, is anonymized and used solely to improve our services.",
-  },
-  {
-    title: "Your Rights",
-    content: "You have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact us at hammadparekh52@gmail.com. We will respond to your request within 7 business days.",
+    content: "We adopt appropriate data collection, storage, and processing practices and security measures to protect against unauthorized access, alteration, disclosure, or destruction of your personal information.",
   },
 ];
 
 export const privacyNote = "We do NOT sell, trade, or rent your personal identification information to others.";
-export const privacyFooter = "This privacy policy was last updated in January 2025. For questions, contact us at hammadparekh52@gmail.com.";
+export const privacyFooter = "You can request deletion of your data at any time by contacting us.";
 
 // ─── Terms & Conditions ───────────────────────────────────────────────
 
 export const termsAndConditions: PolicySection[] = [
   {
-    title: "1. Acceptance of Terms",
-    content: "By accessing, browsing, or purchasing from Hashtech Gaming (hashtechgaming.pk), you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our services.",
+    title: "1. General Agreement",
+    content: "By accessing or using the Hashtech Gaming website and services, you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, you may not access our services.",
   },
   {
     title: "2. Product Condition & Grading",
-    content: "Hashtech Gaming specializes in pre-owned (used) gaming peripherals. Every item is thoroughly inspected by our team and assigned a condition grade on a transparent 1–10 scale:",
+    content: "Hashtech specializes in pre-owned gaming gear. We inspect every item and grade it on a scale of 1-10. It is your responsibility to review the condition score and photos before purchasing.",
     list: [
-      "Excellent (9–10): Near-new condition with minimal to no visible signs of use. Fully functional with all original features working perfectly.",
-      "Very Good (7–8): Minor cosmetic wear such as light scratches, key shine, or small scuffs. All functions work perfectly.",
-      "Good (5–6): Noticeable cosmetic wear including scratches, discoloration, or worn surfaces. Fully functional unless explicitly stated otherwise in the listing.",
-      "Fair (3–4): Significant cosmetic wear. May have minor functional limitations that will be clearly disclosed in the product description.",
+      "Excellent (9-10): Near new condition, minimal to no signs of use.",
+      "Very Good (7-8): Minor cosmetic wear, scratches, or shine, but fully functional.",
+      "Good (5-6): Visible wear, scuffs, or discoloration. Fully functional unless stated otherwise.",
     ],
   },
   {
-    title: "3. Pricing & Payment",
-    content: "All prices are listed in Pakistani Rupees (PKR) and include the product cost only — delivery charges are calculated separately at checkout based on your city. We accept Cash on Delivery (COD) and Nayapay. Prices are subject to change without prior notice. We reserve the right to cancel any order due to stock unavailability, pricing errors, or suspected fraudulent activity.",
+    title: "3. Orders & Pricing",
+    content: "All prices are listed in Pakistani Rupees (PKR). We reserve the right to change prices at any time without notice. We reserve the right to cancel any order for any reason, including but not limited to stock unavailability, errors in pricing, or suspicion of fraud.",
   },
   {
-    title: "4. Orders & Shipping",
-    content: "Once an order is placed, you will receive a confirmation via WhatsApp or email. Orders are processed within 24 hours (during business hours) and shipped via TCS or Leopard Courier with tracking. Estimated delivery times vary by city (1–8 business days). Hashtech Gaming is not responsible for delays caused by courier services, weather, or circumstances beyond our control.",
-  },
-  {
-    title: "5. Exchange & Returns Policy",
-    content: "We offer a 3-day checking warranty from the date of delivery. If you discover a functional defect that was not mentioned in the product listing, you may request an exchange. Items must be returned in the same condition as received with all accessories and original packaging. Exchanges are not available for change of mind, user-caused damage, or cosmetic wear that was noted in the listing. Please refer to our Exchange Policy page for complete details.",
-  },
-  {
-    title: "6. Warranty & Liability",
-    content: "Pre-owned products are sold 'as-is' without manufacturer warranty. Our 3-day check warranty covers only functional defects present at the time of delivery. Hashtech Gaming shall not be held liable for any indirect, incidental, special, or consequential damages arising from the use of our products or services.",
-  },
-  {
-    title: "7. Intellectual Property",
-    content: "All content on this website — including text, graphics, logos, images, and software — is the property of Hashtech Gaming and is protected under applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from any content without our prior written consent.",
-  },
-  {
-    title: "8. Governing Law",
-    content: "These Terms and Conditions shall be governed by and construed in accordance with the laws of Pakistan. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Karachi, Sindh.",
+    title: "4. Warranty & Liability",
+    content: "Unless explicitly stated, our used products are sold \"as-is\" without manufacturer warranty. We provide our own 3-day check warranty purely for functional defects present at the time of delivery. Hashtech Gaming shall not be liable for indirect, incidental, or consequential damages resulting from the use of our products.",
   },
 ];
 
-export const termsFooter = `These terms were last updated in January 2025. For questions, contact us at hammadparekh52@gmail.com.`;
+export const termsFooter = `Questions about our Terms? Contact us at ${supportEmail}`;
 
 // ─── Exchange / Return Policy ─────────────────────────────────────────
 
 export const exchangeHighlight = {
   title: "3-Day Check Warranty",
-  description: "We offer a 3-day checking warranty from the date of delivery. If you find a functional defect that wasn't mentioned in the product description, we will exchange it at no extra cost. Your satisfaction is our priority.",
+  description: "We offer a 3-day checking warranty from the date of delivery. If you find a functional defect that wasn't mentioned in the product description, we will exchange it.",
 };
 
 export const exchangeEligibility: string[] = [
-  "Item must be in the exact same condition as received — no new damage or modifications.",
-  "All original accessories, cables, dongles, and packaging must be returned with the item.",
-  "The defect must be reported within 3 calendar days of receiving the delivery.",
-  "Proof of purchase (Order ID or confirmation message) is required to process the exchange.",
-  "Item must be shipped back or dropped off at our Karachi location for inspection.",
+  "Item must be in the exact same condition as received.",
+  "All accessories, cables, and packaging must be returned.",
+  "Defect must be reported within 3 days of delivery.",
+  "Proof of purchase (Order ID) is required.",
 ];
 
 export const exchangeNonEligible: string[] = [
-  "Change of mind or buyer's remorse",
-  "Physical damage caused by the buyer after delivery",
-  "Software, driver, or compatibility issues with your system",
-  "Cosmetic wear that was already noted and photographed in the product listing",
+  "Change of mind",
+  "Physical damage by user",
+  "Software/Driver issues",
+  "Cosmetic wear noted in listing",
 ];
 
 // ─── Why Us / Trust Signals ───────────────────────────────────────────

@@ -35,6 +35,9 @@ export function Header() {
       <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-background/70 backdrop-blur-xl">
         <div className="container h-full flex items-center justify-between gap-6">
           <Link to="/" className="shrink-0">
+            {/* <span className="text-xl font-gaming-black tracking-tight text-foreground">
+              HASHTECH
+            </span> */}
             <img src={logo} alt="Hashtech" className="size-16 object-cover" />
           </Link>
 
@@ -62,13 +65,13 @@ export function Header() {
               </Link>
               {megaOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
-                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-card p-0 w-[200px] overflow-hidden">
+                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-card p-1 w-[200px] space-y-0.5">
                     {shopCategories.map((cat) => (
                       <Link
                         key={cat.name}
                         to={cat.to}
                         onClick={() => setMegaOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-button text-sm text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
                       >
                         <cat.icon className="h-4 w-4" />
                         {cat.name}
