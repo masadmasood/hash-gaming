@@ -89,7 +89,7 @@ const Index = () => {
 
         {/* Trending — with subtitle and bordered "View all" link */}
         <section className="py-16">
-          <div className="container">
+          <div className="container border border-border/40 rounded-card p-6 md:p-8">
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 className="text-2xl font-gaming text-foreground">Trending Products</h2>
