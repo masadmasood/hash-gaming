@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, lazy, Suspense, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
@@ -14,14 +14,8 @@ import {
   Quote,
   Minus,
   Plus,
-  Gamepad2,
-  Headphones,
-  Keyboard,
-  Mouse,
-  Zap,
   Trophy,
-  ChevronLeft,
-  ChevronRight
+  Send,
 } from "lucide-react";
 import {
   Accordion,
@@ -41,16 +35,13 @@ import { toast } from "sonner";
 
 const trendingProducts = products.filter((p) => !p.isCombo).slice(0, 8);
 const combos = products.filter((p) => p.isCombo);
-
 const whyUs = whyUsReasons;
-
 const whyUsIcons = [ShieldCheck, PackageCheck, Truck, Trophy];
 
 const Index = () => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [reviewsApi, setReviewsApi] = useState<CarouselApi>();
 
-  const handleNewsletter = (e: React.FormEvent) => {
+  const handleNewsletter = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail) {
       toast.error("Please enter your email address");
@@ -58,7 +49,7 @@ const Index = () => {
     }
     toast.success("Thanks for subscribing! 🎮");
     setNewsletterEmail("");
-  };
+  }, [newsletterEmail]);
 
   return (
     <PageTransition>
@@ -92,14 +83,14 @@ const Index = () => {
         {/* Categories */}
         <section className="pb-20">
           <div className="container">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {categories.map((cat) => (
                 <Link key={cat} to={`/shop?category=${cat}`}>
-                  <div className="group relative aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
-                    <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="group relative aspect-[3/4] sm:aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
+                    <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
                     <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                      <h3 className="font-bold text-foreground text-xl md:text-2xl tracking-wide">{cat.toUpperCase()}</h3>
+                      <h3 className="font-bold text-foreground text-lg md:text-2xl tracking-wide">{cat.toUpperCase()}</h3>
                       <p className="text-xs text-foreground/50 mt-1">
                         {products.filter((p) => p.category === cat && !p.isCombo).length} products
                       </p>
@@ -108,11 +99,11 @@ const Index = () => {
                 </Link>
               ))}
               <Link to="/shop?combo=true">
-                <div className="group relative aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
-                  <img src={productImages[combos[0]?.id] || bannerImage} alt="Combos" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div className="group relative aspect-[3/4] sm:aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
+                  <img src={productImages[combos[0]?.id] || bannerImage} alt="Combos" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
                   <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <h3 className="font-bold text-foreground text-xl md:text-2xl tracking-wide">COMBOS</h3>
+                    <h3 className="font-bold text-foreground text-lg md:text-2xl tracking-wide">COMBOS</h3>
                     <p className="text-xs text-foreground/50 mt-1">
                       {combos.length} bundles
                     </p>
@@ -124,7 +115,7 @@ const Index = () => {
         </section>
 
         {/* Trending */}
-        <section className="py-28">
+        <section className="py-20 md:py-28">
           <div className="container">
             <div className="flex items-center justify-between mb-10">
               <div>
@@ -135,7 +126,7 @@ const Index = () => {
                 View all <ArrowRight className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {trendingProducts.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
@@ -163,15 +154,9 @@ const Index = () => {
         </section>
 
         {/* Combo Deals */}
-        <section className="pt-16 pb-32">
+        <section className="pt-16 pb-24 md:pb-32">
           <div className="container">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
+            <Carousel opts={{ align: "start", loop: true }} className="w-full">
               <div className="flex items-center justify-between mb-10">
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">Combo Deals</h2>
@@ -186,11 +171,11 @@ const Index = () => {
               </div>
               <CarouselContent>
                 {combos.map((combo) => (
-                  <CarouselItem key={combo.id} className="md:basis-1/2 lg:basis-1/4">
+                  <CarouselItem key={combo.id} className="basis-1/2 lg:basis-1/4">
                     <Link to={`/product/${combo.id}`} className="block h-full">
                       <Card className="rounded-card border-border/30 bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
                         <div className="aspect-[4/3] bg-background relative overflow-hidden rounded-t-card">
-                          <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-110" />
+                          <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy" />
                           <span className="absolute top-3 left-3 inline-flex text-[10px] font-semibold px-2 py-1 rounded-full bg-foreground text-background">COMBO</span>
                         </div>
                         <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
@@ -207,10 +192,10 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Why Us (Updated) */}
+        {/* Why Us */}
         <section className="py-24 relative overflow-hidden bg-card">
           <div className="container relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div>
                 <h2 className="text-3xl font-bold text-foreground mb-6">
                   WHY CHOOSE <br />
@@ -220,11 +205,11 @@ const Index = () => {
                   We are a team of passionate gamers who understand the importance of reliable gear.
                   We don't just sell used products; we give them a second life.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                   {whyUs.map((item, idx) => {
                     const Icon = whyUsIcons[idx] || ShieldCheck;
                     return (
-                      <div key={item.title} className="flex flex-col items-start gap-4 p-6 rounded-card bg-background/50 border border-border/50 transition-colors">
+                      <div key={item.title} className="flex flex-col items-start gap-4 p-5 md:p-6 rounded-card bg-background/50 border border-border/50 transition-colors">
                         <div className="shrink-0 h-10 w-10 rounded-lg bg-secondary flex items-center justify-center text-primary">
                           <Icon className="w-5 h-5" />
                         </div>
@@ -237,19 +222,17 @@ const Index = () => {
                   })}
                 </div>
               </div>
-              <div className="relative">
+              <div className="relative hidden lg:block">
                 <div className="aspect-[4/5] rounded-[3rem] overflow-hidden bg-secondary/30 relative">
                   <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:24px_24px]" />
                   <div className="relative h-full flex flex-col items-center justify-center p-8 text-center bg-background/20 backdrop-blur-sm border border-white/10 m-8 rounded-[2rem]">
-
                     <div className="flex -space-x-4 rtl:space-x-reverse mb-6">
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i} className="w-12 h-12 rounded-full border-2 border-background overflow-hidden bg-muted">
-                          <img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
+                          <img src={reviews[i]?.image} alt="User" className="w-full h-full object-cover" loading="lazy" />
                         </div>
                       ))}
                     </div>
-
                     <div className="text-7xl font-extrabold text-foreground mb-2">10K+</div>
                     <div className="text-xl text-muted-foreground font-semibold">Happy Gamers Served</div>
                   </div>
@@ -259,16 +242,10 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Reviews - Attractive Version */}
+        {/* Reviews */}
         <section className="py-24">
           <div className="container">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full max-w-7xl mx-auto"
-            >
+            <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-7xl mx-auto">
               <div className="flex items-end justify-between mb-10">
                 <div className="text-start">
                   <h2 className="text-2xl font-bold text-foreground">What the Squad Says</h2>
@@ -279,29 +256,25 @@ const Index = () => {
                   <CarouselNext className="static translate-y-0 size-10" />
                 </div>
               </div>
-
               <CarouselContent>
                 {reviews.map((review) => (
-                  <CarouselItem key={review.id} className="md:basis-1/2 lg:basis-1/3 p-4">
-                    <div className="h-full p-8 rounded-card bg-secondary/10 border border-border/50 hover:bg-secondary/20 transition-all duration-300 flex flex-col relative overflow-hidden group">
+                  <CarouselItem key={review.id} className="basis-full sm:basis-1/2 lg:basis-1/3 p-2">
+                    <div className="h-full p-6 md:p-8 rounded-card bg-secondary/10 border border-border/30 hover:bg-secondary/20 transition-all duration-300 flex flex-col relative overflow-hidden group">
                       <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
-
                       <div className="flex gap-1 mb-6">
                         {Array.from({ length: review.rating }).map((_, i) => (
                           <Star key={i} className="w-4 h-4 fill-orange-500 text-orange-500" />
                         ))}
                       </div>
-
-                      <p className="text-muted-foreground leading-relaxed mb-8 flex-1 relative z-10 font-normal">
+                      <p className="text-muted-foreground leading-relaxed mb-8 flex-1 relative z-10 font-normal text-sm">
                         "{review.text}"
                       </p>
-
                       <div className="flex items-center gap-4 mt-auto">
-                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
-                          <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
+                        <div className="w-10 h-10 rounded-full overflow-hidden border border-border bg-surface">
+                          <img src={review.image} alt={review.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-foreground">{review.name}</h4>
+                          <h4 className="font-bold text-foreground text-sm">{review.name}</h4>
                           <span className="text-xs text-primary font-medium flex items-center gap-1">
                             <ShieldCheck className="w-3 h-3" /> Verified Buyer
                           </span>
@@ -341,6 +314,25 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Newsletter */}
+        <section className="py-20 bg-card">
+          <div className="container max-w-2xl mx-auto text-center">
+            <h2 className="text-2xl font-bold text-foreground mb-3">Stay in the Loop</h2>
+            <p className="text-sm text-muted-foreground mb-8">Get notified about new drops, exclusive deals, and restocks. No spam, ever.</p>
+            <form onSubmit={handleNewsletter} className="flex gap-2 max-w-md mx-auto">
+              <input
+                type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="flex-1 h-12 px-4 rounded-button border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/30 transition-colors"
+              />
+              <Button type="submit" className="h-12 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold gap-2">
+                <Send className="h-4 w-4" /> Subscribe
+              </Button>
+            </form>
+          </div>
+        </section>
       </main>
     </PageTransition>
   );
