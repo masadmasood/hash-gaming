@@ -10,6 +10,7 @@ import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import { Minus, Plus, ShoppingCart, Star } from "lucide-react";
 import { toast } from "sonner";
+import { getConditionLabel } from "@/lib/condition";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,6 +31,7 @@ const ProductDetail = () => {
     );
   }
 
+  const condition = getConditionLabel(product.conditionScore);
   const productReviews = reviews.filter((r) => r.productId === product.id);
   const related = products.filter((p) => p.category === product.category && p.id !== product.id && !p.isCombo).slice(0, 4);
   const inStock = product.stockQty > 0;
@@ -58,7 +60,7 @@ const ProductDetail = () => {
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`w-16 h-16 rounded-lg overflow-hidden border transition-colors ${i === selectedImage ? "border-foreground" : "border-border"}`}
+                    className={`w-16 h-16 rounded-md overflow-hidden border transition-colors ${i === selectedImage ? "border-neon-cyan" : "border-border"}`}
                   >
                     <img src={img} alt="" className="h-full w-full object-cover" />
                   </button>
@@ -71,16 +73,18 @@ const ProductDetail = () => {
           <div className="space-y-6">
             <div>
               <p className="text-sm text-muted-foreground mb-1">{product.brand} · {product.category}</p>
-              <h1 className="text-3xl font-semibold text-foreground">{product.title}</h1>
+              <h1 className="text-3xl font-bold text-foreground font-gaming">{product.title}</h1>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-2xl font-semibold text-foreground">PKR {product.pricePKR.toLocaleString()}</span>
-              <Badge variant="outline" className="rounded-full border-foreground/20 text-sm">{product.conditionScore}/10</Badge>
-              {product.isCombo && <Badge className="rounded-full bg-foreground text-background">COMBO</Badge>}
+              <Badge className={`rounded-md text-xs font-medium px-2 py-0.5 ${condition.color}`}>
+                {condition.label}
+              </Badge>
+              {product.isCombo && <Badge className="rounded-md bg-neon-purple text-white border-0">COMBO</Badge>}
             </div>
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">{product.conditionNote}</p>
-              <p className={`text-sm ${inStock ? "text-muted-foreground" : "text-muted-foreground/50"}`}>
+              <p className={`text-sm ${inStock ? "text-neon-cyan/80" : "text-muted-foreground/50"}`}>
                 {inStock ? `${product.stockQty} in stock` : "Out of stock"}
               </p>
             </div>
@@ -107,10 +111,10 @@ const ProductDetail = () => {
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
-                <Button onClick={handleAddToCart} className="h-11 px-6 rounded-button bg-foreground text-background hover:bg-foreground/90 gap-2">
+                <Button onClick={handleAddToCart} className="h-11 px-6 rounded-button bg-neon-cyan text-black hover:bg-neon-cyan/90 gap-2 font-semibold">
                   <ShoppingCart className="h-4 w-4" /> Add to Cart
                 </Button>
-                <Button onClick={handleBuyNow} variant="outline" className="h-11 px-6 rounded-button border-border">
+                <Button onClick={handleBuyNow} variant="outline" className="h-11 px-6 rounded-button border-border hover:border-neon-cyan/30">
                   Buy Now
                 </Button>
               </div>
@@ -150,8 +154,8 @@ const ProductDetail = () => {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-foreground">{r.name}</span>
-                        <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-3 w-3 fill-foreground text-foreground" />)}</div>
+                        <span className="text-sm font-medium text-foreground font-gaming">{r.name}</span>
+                        <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-3 w-3 fill-star-gold text-star-gold" />)}</div>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">{r.text}</p>
                     </div>
@@ -165,7 +169,7 @@ const ProductDetail = () => {
         {/* Related */}
         {related.length > 0 && (
           <section className="mt-16">
-            <h2 className="text-2xl font-semibold text-foreground mb-6">Related Products</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6 font-gaming">Related Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {related.map((p) => <ProductCard key={p.id} product={p} />)}
             </div>
