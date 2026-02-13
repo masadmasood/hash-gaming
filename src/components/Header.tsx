@@ -25,7 +25,7 @@ export function Header() {
       <header className="sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur-xl">
         <div className="container h-full flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <span className="text-xl font-gaming font-bold tracking-wider text-foreground uppercase">
+            <span className="text-xl font-gaming font-bold tracking-tight text-foreground">
               Hashtech Gaming
             </span>
           </Link>
