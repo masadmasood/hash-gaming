@@ -10,7 +10,7 @@ import { products, reviews, categories } from "@/data/products";
 import { productImages } from "@/data/productImages";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 const categoryImages: Record<string, string> = {
   Keyboards: catKeyboards,
@@ -31,13 +31,9 @@ const whyUs = [
 
 const Index = () => {
   const [reviewIndex, setReviewIndex] = useState(0);
-  const [comboIndex, setComboIndex] = useState(0);
-  const maxComboIndex = Math.max(0, combos.length - 3);
 
   const nextReview = () => setReviewIndex((i) => (i + 1) % displayReviews.length);
   const prevReview = () => setReviewIndex((i) => (i - 1 + displayReviews.length) % displayReviews.length);
-  const nextCombo = () => setComboIndex((i) => Math.min(i + 1, maxComboIndex));
-  const prevCombo = () => setComboIndex((i) => Math.max(i - 1, 0));
 
   return (
     <PageTransition>
@@ -68,37 +64,38 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Categories */}
-        <section className="py-12">
+        {/* Categories — Overlay cards, compact visual */}
+        <section className="pb-20">
           <div className="container">
-            <h2 className="text-2xl font-gaming text-foreground mb-8">Browse Categories</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {categories.map((cat) => (
-                  <Link key={cat} to={`/shop?category=${cat}`}>
-                    <Card className="group rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 cursor-pointer overflow-hidden">
-                      <div className="aspect-[4/3] bg-surface overflow-hidden">
-                        <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-gaming text-foreground text-lg">{cat}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {products.filter((p) => p.category === cat && !p.isCombo).length} products
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                <Link key={cat} to={`/shop?category=${cat}`}>
+                  <div className="group relative aspect-[16/9] rounded-card overflow-hidden cursor-pointer">
+                    <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-background/50 group-hover:bg-background/30 transition-colors duration-300" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <h3 className="font-gaming-black text-foreground text-xl md:text-2xl tracking-wide">{cat.toUpperCase()}</h3>
+                      <p className="text-xs text-foreground/50 mt-1">
+                        {products.filter((p) => p.category === cat && !p.isCombo).length} products
+                      </p>
+                    </div>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Trending */}
-        <section className="py-12">
+        {/* Trending — with subtitle and bordered "View all" link */}
+        <section className="py-16">
           <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-gaming text-foreground">Trending Products</h2>
-              <Link to="/shop" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-                View all <ArrowRight className="h-3 w-3" />
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 className="text-2xl font-gaming text-foreground">Trending Products</h2>
+                <p className="text-sm text-muted-foreground mt-1">Our most popular picks this week</p>
+              </div>
+              <Link to="/shop" className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1 border border-border rounded-button px-4 py-2 hover:bg-surface">
+                View all <ArrowRight className="h-3 w-3 ml-1" />
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -109,7 +106,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Mid-page Banner - Full width parallax */}
+        {/* Mid-page Banner — Full width parallax */}
         <section
           className="relative py-24 md:py-32 bg-fixed bg-cover bg-center"
           style={{ backgroundImage: `url(${bannerImage})` }}
@@ -128,15 +125,23 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Combo Deals */}
-        <section className="py-12">
+        {/* Combo Deals — on surface background to break the rhythm */}
+        <section className="py-16 bg-surface">
           <div className="container">
-            <h2 className="text-2xl font-gaming text-foreground mb-8">Combo Deals</h2>
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 className="text-2xl font-gaming text-foreground">Combo Deals</h2>
+                <p className="text-sm text-muted-foreground mt-1">Save more when you bundle</p>
+              </div>
+              <Link to="/shop?combo=true" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                All combos <ArrowRight className="h-3 w-3 ml-1" />
+              </Link>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {combos.map((combo) => (
                 <Link key={combo.id} to={`/product/${combo.id}`} className="block h-full">
                   <Card className="rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
-                    <div className="aspect-[4/3] bg-surface relative overflow-hidden rounded-t-card">
+                    <div className="aspect-[4/3] bg-background relative overflow-hidden rounded-t-card">
                       <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
                       <span className="absolute top-3 left-3 inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>
                     </div>
@@ -152,52 +157,47 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Why Us - 4 column grid */}
-        <section className="py-16">
+        {/* Why Us */}
+        <section className="py-20">
           <div className="container">
-            <h2 className="text-2xl font-gaming text-foreground mb-10">Why Hashtech Gaming?</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl font-gaming text-foreground">Why Hashtech Gaming?</h2>
+              <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">Everything we do is built around trust, quality, and the gaming community.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {whyUs.map((item) => (
-                <div key={item.title} className="space-y-3">
-                  <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center">
+                <div key={item.title} className="text-center space-y-3">
+                  <div className="h-12 w-12 rounded-full border border-border flex items-center justify-center mx-auto">
                     <item.icon className="h-5 w-5 text-muted-foreground" />
                   </div>
-                  <div>
-                    <h3 className="font-gaming text-foreground text-base">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{item.desc}</p>
-                  </div>
+                  <h3 className="font-gaming text-foreground text-base">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Reviews - 3-card Slider */}
-        <section className="py-16">
+        {/* Reviews */}
+        <section className="py-16 bg-surface">
           <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-gaming text-foreground">What Gamers Say</h2>
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 className="text-2xl font-gaming text-foreground">What Gamers Say</h2>
+                <p className="text-sm text-muted-foreground mt-1">Real feedback from verified buyers</p>
+              </div>
               <div className="flex items-center gap-2">
-                <button
-                  onClick={prevReview}
-                  className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-surface transition-colors"
-                >
+                <button onClick={prevReview} className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-card transition-colors">
                   <ChevronLeft className="h-4 w-4 text-foreground" />
                 </button>
-                <button
-                  onClick={nextReview}
-                  className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-surface transition-colors"
-                >
+                <button onClick={nextReview} className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-card transition-colors">
                   <ChevronRight className="h-4 w-4 text-foreground" />
                 </button>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {displayReviews.map((review) => (
-                <div
-                  key={review.id}
-                  className="relative p-6 rounded-card border border-border bg-card flex flex-col justify-between"
-                >
+                <div key={review.id} className="relative p-6 rounded-card border border-border bg-card flex flex-col justify-between">
                   <div className="absolute top-4 right-4 opacity-[0.06]">
                     <Quote className="h-12 w-12 text-foreground" />
                   </div>
@@ -210,9 +210,7 @@ const Index = () => {
                         <Star key={`e-${i}`} className="h-4 w-4 text-border" />
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed italic">
-                      "{review.text}"
-                    </p>
+                    <p className="text-sm text-muted-foreground leading-relaxed italic">"{review.text}"</p>
                   </div>
                   <div className="flex items-center gap-3 mt-5 pt-4 border-t border-border">
                     <div className="h-9 w-9 rounded-full bg-surface-2 overflow-hidden">
@@ -230,13 +228,11 @@ const Index = () => {
         </section>
 
         {/* CTA */}
-        <section className="py-16">
+        <section className="py-20">
           <div className="container max-w-3xl mx-auto">
             <Card className="rounded-card border-border bg-card">
               <CardContent className="p-12 md:p-16 text-center space-y-6">
-                <h2 className="text-3xl font-gaming text-foreground">
-                  Ready to Level Up?
-                </h2>
+                <h2 className="text-3xl font-gaming text-foreground">Ready to Level Up?</h2>
                 <p className="text-muted-foreground max-w-md mx-auto">
                   Browse our full collection of quality-tested, pre-owned gaming gear at unbeatable prices.
                 </p>
