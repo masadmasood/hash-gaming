@@ -3,33 +3,20 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { PageTransition } from "@/components/PageTransition";
-import { products, reviews, categories, productImages, categoryImages, bannerImage, faqs, whyUsReasons } from "@/data/siteData";
+import {
+  products,
+  reviews,
+  categories,
+  productImages,
+  categoryImages,
+  bannerImage,
+  faqs,
+  whyUsReasons,
+} from "@/data/siteData";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  ShieldCheck,
-  PackageCheck,
-  Truck,
-  Star,
-  ArrowRight,
-  Quote,
-  Minus,
-  Plus,
-  Trophy,
-  Send,
-} from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, Minus, Plus, Trophy, Send } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
 import { toast } from "sonner";
 
@@ -41,15 +28,18 @@ const whyUsIcons = [ShieldCheck, PackageCheck, Truck, Trophy];
 const Index = () => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
 
-  const handleNewsletter = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsletterEmail) {
-      toast.error("Please enter your email address");
-      return;
-    }
-    toast.success("Thanks for subscribing! 🎮");
-    setNewsletterEmail("");
-  }, [newsletterEmail]);
+  const handleNewsletter = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!newsletterEmail) {
+        toast.error("Please enter your email address");
+        return;
+      }
+      toast.success("Thanks for subscribing! 🎮");
+      setNewsletterEmail("");
+    },
+    [newsletterEmail],
+  );
 
   return (
     <PageTransition>
@@ -72,7 +62,10 @@ const Index = () => {
                 </Button>
               </Link>
               <Link to="/shop?combo=true">
-                <Button variant="outline" className="h-12 px-6 rounded-button border-border text-foreground hover:bg-surface hover:border-foreground/20">
+                <Button
+                  variant="outline"
+                  className="h-12 px-6 rounded-button border-border text-foreground hover:bg-surface hover:border-foreground/20"
+                >
                   View Combos
                 </Button>
               </Link>
@@ -87,10 +80,17 @@ const Index = () => {
               {categories.map((cat) => (
                 <Link key={cat} to={`/shop?category=${cat}`}>
                   <div className="group relative aspect-[3/4] sm:aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
-                    <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+                    <img
+                      src={categoryImages[cat]}
+                      alt={cat}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
                     <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                      <h3 className="font-bold text-foreground text-lg md:text-2xl tracking-wide">{cat.toUpperCase()}</h3>
+                      <h3 className="font-bold text-foreground text-lg md:text-2xl tracking-wide">
+                        {cat.toUpperCase()}
+                      </h3>
                       <p className="text-xs text-foreground/50 mt-1">
                         {products.filter((p) => p.category === cat && !p.isCombo).length} products
                       </p>
@@ -100,13 +100,16 @@ const Index = () => {
               ))}
               <Link to="/shop?combo=true">
                 <div className="group relative aspect-[3/4] sm:aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
-                  <img src={productImages[combos[0]?.id] || bannerImage} alt="Combos" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+                  <img
+                    src={productImages[combos[0]?.id] || bannerImage}
+                    alt="Combos"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
                   <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                     <h3 className="font-bold text-foreground text-lg md:text-2xl tracking-wide">COMBOS</h3>
-                    <p className="text-xs text-foreground/50 mt-1">
-                      {combos.length} bundles
-                    </p>
+                    <p className="text-xs text-foreground/50 mt-1">{combos.length} bundles</p>
                   </div>
                 </div>
               </Link>
@@ -122,7 +125,10 @@ const Index = () => {
                 <h2 className="text-2xl font-bold text-foreground">Trending Products</h2>
                 <p className="text-sm text-muted-foreground mt-1">Our most popular picks this week</p>
               </div>
-              <Link to="/shop" className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1 group">
+              <Link
+                to="/shop"
+                className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1 group"
+              >
                 View all <ArrowRight className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -175,12 +181,21 @@ const Index = () => {
                     <Link to={`/product/${combo.id}`} className="block h-full">
                       <Card className="rounded-card border-border/30 bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
                         <div className="aspect-[4/3] bg-background relative overflow-hidden rounded-t-card">
-                          <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy" />
-                          <span className="absolute top-3 left-3 inline-flex text-[10px] font-semibold px-2 py-1 rounded-full bg-foreground text-background">COMBO</span>
+                          <img
+                            src={productImages[combo.id] || combo.images[0]}
+                            alt={combo.title}
+                            className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
+                            loading="lazy"
+                          />
+                          <span className="absolute top-3 left-3 inline-flex text-[10px] font-semibold px-2 py-1 rounded-full bg-foreground text-background">
+                            COMBO
+                          </span>
                         </div>
                         <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
                           <h3 className="font-semibold text-sm text-foreground">{combo.title}</h3>
-                          <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{combo.comboItems?.join(" + ")}</p>
+                          <p className="text-xs text-muted-foreground line-clamp-2 flex-1">
+                            {combo.comboItems?.join(" + ")}
+                          </p>
                           <p className="font-semibold text-foreground">PKR {combo.pricePKR.toLocaleString()}</p>
                         </CardContent>
                       </Card>
@@ -202,14 +217,17 @@ const Index = () => {
                   <span className="text-primary">HASHTECH?</span>
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  We are a team of passionate gamers who understand the importance of reliable gear.
-                  We don't just sell used products; we give them a second life.
+                  We are a team of passionate gamers who understand the importance of reliable gear. We don't just sell
+                  used products; we give them a second life.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                   {whyUs.map((item, idx) => {
                     const Icon = whyUsIcons[idx] || ShieldCheck;
                     return (
-                      <div key={item.title} className="flex flex-col items-start gap-4 p-5 md:p-6 rounded-card bg-background/50 border border-border/50 transition-colors">
+                      <div
+                        key={item.title}
+                        className="flex flex-col items-start gap-4 p-5 md:p-6 rounded-card bg-background/50 border border-border/50 transition-colors"
+                      >
                         <div className="shrink-0 h-10 w-10 rounded-lg bg-secondary flex items-center justify-center text-primary">
                           <Icon className="w-5 h-5" />
                         </div>
@@ -228,8 +246,16 @@ const Index = () => {
                   <div className="relative h-full flex flex-col items-center justify-center p-8 text-center bg-background/20 backdrop-blur-sm border border-white/10 m-8 rounded-[2rem]">
                     <div className="flex -space-x-4 rtl:space-x-reverse mb-6">
                       {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="w-12 h-12 rounded-full border-2 border-background overflow-hidden bg-muted">
-                          <img src={reviews[i]?.image} alt="User" className="w-full h-full object-cover" loading="lazy" />
+                        <div
+                          key={i}
+                          className="w-12 h-12 rounded-full border-2 border-background overflow-hidden bg-muted"
+                        >
+                          <img
+                            src={reviews[i]?.image}
+                            alt="User"
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
                         </div>
                       ))}
                     </div>
@@ -271,7 +297,12 @@ const Index = () => {
                       </p>
                       <div className="flex items-center gap-4 mt-auto">
                         <div className="w-10 h-10 rounded-full overflow-hidden border border-border bg-surface">
-                          <img src={review.image} alt={review.name} className="w-full h-full object-cover" loading="lazy" />
+                          <img
+                            src={review.image}
+                            alt={review.name}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
                         </div>
                         <div>
                           <h4 className="font-bold text-foreground text-sm">{review.name}</h4>
@@ -297,7 +328,11 @@ const Index = () => {
             </div>
             <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
               {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border/30 bg-card px-6 data-[state=open]:border-foreground/20 transition-all duration-200">
+                <AccordionItem
+                  key={i}
+                  value={`faq-${i}`}
+                  className="group rounded-card border border-border/30 bg-card px-6 data-[state=open]:border-foreground/20 transition-all duration-200"
+                >
                   <AccordionTrigger className="py-5 text-[15px] text-foreground hover:no-underline [&>svg]:hidden font-['Inter',sans-serif] font-normal">
                     <span className="text-left">{faq.question}</span>
                     <div className="ml-4 shrink-0">
@@ -311,26 +346,6 @@ const Index = () => {
                 </AccordionItem>
               ))}
             </Accordion>
-          </div>
-        </section>
-
-        {/* Newsletter */}
-        <section className="py-20 bg-card">
-          <div className="container max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-3">Stay in the Loop</h2>
-            <p className="text-sm text-muted-foreground mb-8">Get notified about new drops, exclusive deals, and restocks. No spam, ever.</p>
-            <form onSubmit={handleNewsletter} className="flex gap-2 max-w-md mx-auto">
-              <input
-                type="email"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="flex-1 h-12 px-4 rounded-button border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/30 transition-colors"
-              />
-              <Button type="submit" className="h-12 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold gap-2">
-                <Send className="h-4 w-4" /> Subscribe
-              </Button>
-            </form>
           </div>
         </section>
       </main>
