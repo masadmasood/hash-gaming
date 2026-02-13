@@ -4,6 +4,7 @@ export interface Product {
   category: "Keyboards" | "Mouse" | "Headphones";
   brand: "HyperX" | "Razer" | "Corsair" | "Logitech";
   pricePKR: number;
+  originalPricePKR?: number;
   conditionScore: number;
   conditionNote: string;
   stockQty: number;
@@ -63,6 +64,7 @@ export const products: Product[] = [
     category: "Keyboards",
     brand: "HyperX",
     pricePKR: 7500,
+    originalPricePKR: 12000,
     conditionScore: 8,
     conditionNote: "Minor key shine on WASD, fully functional. Cherry MX Red switches.",
     stockQty: 3,
@@ -83,6 +85,7 @@ export const products: Product[] = [
     category: "Keyboards",
     brand: "Razer",
     pricePKR: 12000,
+    originalPricePKR: 22000,
     conditionScore: 9,
     conditionNote: "Like new condition. Minimal use, all keys responsive. Original box included.",
     stockQty: 2,
@@ -143,6 +146,7 @@ export const products: Product[] = [
     category: "Mouse",
     brand: "Razer",
     pricePKR: 5500,
+    originalPricePKR: 9000,
     conditionScore: 9,
     conditionNote: "Barely used. No scratches, smooth glides. Sensor tracks flawlessly.",
     stockQty: 5,
@@ -163,6 +167,7 @@ export const products: Product[] = [
     category: "Mouse",
     brand: "Logitech",
     pricePKR: 6000,
+    originalPricePKR: 11000,
     conditionScore: 7,
     conditionNote: "Some grip wear on sides. Scroll wheel and buttons in great shape. Weights included.",
     stockQty: 3,
@@ -223,6 +228,7 @@ export const products: Product[] = [
     category: "Headphones",
     brand: "HyperX",
     pricePKR: 8500,
+    originalPricePKR: 14000,
     conditionScore: 9,
     conditionNote: "Excellent condition. Memory foam pads still plush. 7.1 USB sound card included.",
     stockQty: 4,
@@ -283,6 +289,7 @@ export const products: Product[] = [
     category: "Headphones",
     brand: "Logitech",
     pricePKR: 10000,
+    originalPricePKR: 18000,
     conditionScore: 9,
     conditionNote: "Near-mint. Blue VO!CE mic tech works perfectly. Both ear pads in great shape.",
     stockQty: 1,

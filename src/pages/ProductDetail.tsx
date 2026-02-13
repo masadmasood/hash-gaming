@@ -154,7 +154,7 @@ const ProductDetail = () => {
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-semibold text-foreground">{r.name}</span>
-                        <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-3 w-3 fill-foreground/60 text-foreground/60" />)}</div>
+                        <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-3 w-3 fill-star text-star" />)}</div>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">{r.text}</p>
                     </div>

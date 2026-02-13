@@ -6,7 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { ScrollToTop } from "@/components/ScrollToTop";
+
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
@@ -46,7 +46,7 @@ const App = () => (
             </main>
             <Footer />
             <WhatsAppButton />
-            <ScrollToTop />
+            
           </div>
         </BrowserRouter>
       </CartProvider>

@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
+import { ArrowUp } from "lucide-react";
 
 export function Footer() {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
     <footer className="border-t border-border bg-card mt-16">
       <div className="container py-12">
@@ -45,9 +48,18 @@ export function Footer() {
           </div>
         </div>
         <Separator className="my-8 bg-border" />
-        <p className="text-center text-xs text-muted-foreground">
-          © 2026 Hashtech Gaming. All rights reserved.
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-muted-foreground">
+            © 2026 Hashtech Gaming. All rights reserved.
+          </p>
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowUp className="h-3.5 w-3.5" />
+            Back to top
+          </button>
+        </div>
       </div>
     </footer>
   );

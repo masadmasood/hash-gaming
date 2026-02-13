@@ -40,6 +40,12 @@
     --surface-2: 0 0% 16%;
 
     --condition: 0 0% 55%;
+    --condition-excellent: 142 71% 45%;
+    --condition-verygood: 48 96% 53%;
+    --condition-good: 25 95% 53%;
+    --condition-fair: 0 72% 51%;
+    --star: 43 96% 56%;
+    --discount: 0 72% 51%;
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 90%;
