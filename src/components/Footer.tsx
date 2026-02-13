@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-3">
-            <h3 className="font-bold text-foreground font-gaming text-lg uppercase tracking-wider">Hashtech Gaming</h3>
+            <h3 className="font-bold text-foreground font-gaming text-lg">Hashtech Gaming</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Premium used gaming accessories in Karachi, Pakistan. Every item tested and verified.
             </p>
@@ -19,7 +19,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-bold text-foreground text-sm font-gaming uppercase tracking-wider">Shop</h4>
+            <h4 className="font-bold text-foreground text-sm font-gaming">Shop</h4>
             <nav className="flex flex-col gap-2">
               <Link to="/shop?category=Keyboards" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Keyboards</Link>
               <Link to="/shop?category=Mouse" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mouse</Link>
@@ -29,7 +29,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-bold text-foreground text-sm font-gaming uppercase tracking-wider">Support</h4>
+            <h4 className="font-bold text-foreground text-sm font-gaming">Support</h4>
             <nav className="flex flex-col gap-2">
               <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Us</Link>
               <Link to="/policies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Delivery Policy</Link>
@@ -38,7 +38,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-bold text-foreground text-sm font-gaming uppercase tracking-wider">Legal</h4>
+            <h4 className="font-bold text-foreground text-sm font-gaming">Legal</h4>
             <nav className="flex flex-col gap-2">
               <Link to="/policies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
               <Link to="/policies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</Link>

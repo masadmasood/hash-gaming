@@ -73,7 +73,7 @@ const ProductDetail = () => {
           <div className="space-y-6">
             <div>
               <p className="text-sm text-muted-foreground mb-1">{product.brand} · {product.category}</p>
-              <h1 className="text-3xl font-bold text-foreground font-gaming uppercase tracking-wider">{product.title}</h1>
+              <h1 className="text-3xl font-bold text-foreground font-gaming">{product.title}</h1>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-2xl font-semibold text-foreground">PKR {product.pricePKR.toLocaleString()}</span>
@@ -154,7 +154,7 @@ const ProductDetail = () => {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-foreground font-gaming uppercase tracking-wider">{r.name}</span>
+                        <span className="text-sm font-semibold text-foreground font-gaming">{r.name}</span>
                         <div className="flex gap-0.5">{Array.from({ length: r.rating }).map((_, i) => <Star key={i} className="h-3 w-3 fill-star-gold text-star-gold" />)}</div>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">{r.text}</p>
@@ -169,7 +169,7 @@ const ProductDetail = () => {
         {/* Related */}
         {related.length > 0 && (
           <section className="mt-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6 font-gaming uppercase tracking-wider">Related Products</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6 font-gaming">Related Products</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {related.map((p) => <ProductCard key={p.id} product={p} />)}
             </div>
