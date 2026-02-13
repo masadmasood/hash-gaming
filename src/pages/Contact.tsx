@@ -15,7 +15,7 @@ const contactDetails = [
 ];
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", subject: "", phone: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const Contact = () => {
       return;
     }
     toast.success("Message sent! We'll get back to you soon.");
-    setForm({ name: "", email: "", subject: "", message: "" });
+    setForm({ name: "", email: "", subject: "", phone: "", message: "" });
   };
 
   return (
@@ -85,6 +85,10 @@ const Contact = () => {
                 <div>
                   <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Subject</label>
                   <Input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="rounded-input border-border bg-background h-11" />
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Phone</label>
+                  <Input value={form.phone || ""} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="e.g. 03xx-xxxxxxx" className="rounded-input border-border bg-background h-11" />
                 </div>
                 <div>
                   <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Message *</label>

@@ -17,7 +17,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link to={`/product/${product.id}`} className="group block h-full">
-      <div className="overflow-hidden rounded-card border border-border bg-card transition-all duration-200 hover:border-foreground/20 h-full flex flex-col">
+      <div className="overflow-hidden rounded-card border border-border/30 bg-card transition-all duration-200 hover:border-foreground/20 h-full flex flex-col">
         <div className="relative aspect-[4/3] bg-surface overflow-hidden">
           <img
             src={productImages[product.id] || product.images[0]}

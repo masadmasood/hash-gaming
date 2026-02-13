@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { products, categories, brands } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 
 type SortOption = "newest" | "price-low" | "price-high" | "condition";
@@ -26,6 +25,16 @@ const Shop = () => {
   const [conditionMin, setConditionMin] = useState(1);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [sort, setSort] = useState<SortOption>("newest");
+
+  // Sync category from URL when navigating from homepage category links
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) {
+      setSelectedCategories([cat]);
+    } else if (!showCombos) {
+      setSelectedCategories([]);
+    }
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     let result = products.filter((p) => {
