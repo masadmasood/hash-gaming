@@ -1,73 +1,127 @@
-# Welcome to your Lovable project
+# Hashtech Gaming
 
-## Project info
+Premium pre-owned gaming gear in Pakistan.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## About
 
-## How can I edit this code?
+Hashtech Gaming is an e-commerce platform specializing in high-quality, pre-owned gaming equipment. We offer a wide range of gaming peripherals, consoles, and accessories at competitive prices, ensuring gamers in Pakistan have access to top-tier gear without breaking the bank.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Product Catalog**: Browse through our extensive collection of gaming products
+- **Product Details**: Detailed product pages with specifications and images
+- **Shopping Cart**: Add items to cart and manage quantities
+- **Checkout Process**: Secure checkout with order confirmation
+- **Search Functionality**: Find products quickly with our search modal
+- **Responsive Design**: Optimized for desktop and mobile devices
+- **WhatsApp Integration**: Direct contact for customer support
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **State Management**: React Context API
+- **Routing**: React Router (assumed from project structure)
+- **Testing**: Vitest
+- **Package Manager**: npm/bun (lockfile present)
 
-**Use your preferred IDE**
+## Project Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   └── ...             # Custom components (Header, Footer, etc.)
+├── pages/              # Page components
+├── context/            # React contexts (CartContext)
+├── data/               # Static data and configurations
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── assets/             # Static assets
 ```
 
-**Edit a file directly in GitHub**
+## Getting Started
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Prerequisites
 
-**Use GitHub Codespaces**
+- Node.js (version 16 or higher)
+- npm or bun
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Installation
 
-## What technologies are used for this project?
+```sh
+# Install dependencies
+npm install
+# or
+bun install
+```
 
-This project is built with:
+### Development
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```sh
+# Start development server
+npm run dev
+# or
+bun run dev
+```
 
-## How can I deploy this project?
+The application will be available at `http://localhost:5173`
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Building
 
-## Can I connect a custom domain to my Lovable project?
+```sh
+# Build for production
+npm run build
+# or
+bun run build
+```
 
-Yes, you can!
+### Testing
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```sh
+# Run tests once
+npm run test
+# or
+bun run test
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+# Run tests in watch mode
+npm run test:watch
+# or
+bun run test:watch
+```
+
+### Linting
+
+```sh
+# Run ESLint
+npm run lint
+# or
+bun run lint
+```
+
+### Preview Production Build
+
+```sh
+# Preview the production build locally
+npm run preview
+# or
+bun run preview
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is private and proprietary.
+
+## Contact
+
+For inquiries about products or partnerships, reach out to us via WhatsApp or through our contact page.
