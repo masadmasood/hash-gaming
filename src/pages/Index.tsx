@@ -242,12 +242,12 @@ const Index = () => {
                 { q: "How long does delivery take?", a: "Delivery takes 2–5 business days depending on your city. We ship nationwide across Pakistan with tracking on every order." },
                 { q: "Can I pay cash on delivery?", a: "Yes, we support Cash on Delivery (COD) for all orders within Pakistan. Online payment options are also available." },
               ].map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border bg-card px-6 data-[state=open]:border-foreground/20 transition-colors">
-                  <AccordionTrigger className="py-5 text-sm font-medium text-foreground hover:no-underline [&>svg]:hidden">
+                <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border bg-card px-6 data-[state=open]:border-foreground/20 transition-all duration-200">
+                  <AccordionTrigger className="py-5 text-[15px] font-medium text-foreground hover:no-underline [&>svg]:hidden">
                     <span className="text-left">{faq.q}</span>
-                    <div className="ml-4 shrink-0 h-7 w-7 rounded-full border border-border flex items-center justify-center">
-                      <Plus className="h-3.5 w-3.5 text-muted-foreground group-data-[state=open]:hidden" />
-                      <Minus className="h-3.5 w-3.5 text-muted-foreground hidden group-data-[state=open]:block" />
+                    <div className="ml-4 shrink-0">
+                      <Plus className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:hidden" />
+                      <Minus className="h-4 w-4 text-muted-foreground transition-transform duration-200 hidden group-data-[state=open]:block" />
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-5 text-sm text-muted-foreground leading-relaxed">
