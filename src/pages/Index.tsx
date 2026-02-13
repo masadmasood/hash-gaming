@@ -9,7 +9,8 @@ import catHeadphones from "@/assets/cat-headphones.jpg";
 import { products, reviews, categories } from "@/data/products";
 import { productImages } from "@/data/productImages";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useState } from "react";
 
 const categoryImages: Record<string, string> = {
@@ -227,14 +228,13 @@ const Index = () => {
           </div>
         </section>
 
-        {/* FAQ */}
         <section className="py-20">
           <div className="container max-w-3xl mx-auto">
-            <div className="text-center mb-10">
+            <div className="text-center mb-12">
               <h2 className="text-2xl font-gaming text-foreground">Frequently Asked Questions</h2>
               <p className="text-sm text-muted-foreground mt-2">Got questions? We've got answers.</p>
             </div>
-            <div className="space-y-3">
+            <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
               {[
                 { q: "Are all products tested before shipping?", a: "Yes, every single item is inspected, graded, and tested for full functionality before being listed on our store." },
                 { q: "What does the condition score mean?", a: "We grade every product on a scale of 1–10. Excellent (9–10) means near-new, Very Good (7–8) means minor cosmetic wear, and Good (5–6) means visible wear but fully functional." },
@@ -242,17 +242,20 @@ const Index = () => {
                 { q: "How long does delivery take?", a: "Delivery takes 2–5 business days depending on your city. We ship nationwide across Pakistan with tracking on every order." },
                 { q: "Can I pay cash on delivery?", a: "Yes, we support Cash on Delivery (COD) for all orders within Pakistan. Online payment options are also available." },
               ].map((faq, i) => (
-                <details key={i} className="group rounded-card border border-border bg-card">
-                  <summary className="flex items-center justify-between cursor-pointer px-6 py-4 text-sm font-medium text-foreground list-none">
-                    {faq.q}
-                    <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90 shrink-0 ml-4" />
-                  </summary>
-                  <div className="px-6 pb-4 text-sm text-muted-foreground leading-relaxed">
+                <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border bg-card px-6 data-[state=open]:border-foreground/20 transition-colors">
+                  <AccordionTrigger className="py-5 text-sm font-medium text-foreground hover:no-underline [&>svg]:hidden">
+                    <span className="text-left">{faq.q}</span>
+                    <div className="ml-4 shrink-0 h-7 w-7 rounded-full border border-border flex items-center justify-center">
+                      <Plus className="h-3.5 w-3.5 text-muted-foreground group-data-[state=open]:hidden" />
+                      <Minus className="h-3.5 w-3.5 text-muted-foreground hidden group-data-[state=open]:block" />
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 text-sm text-muted-foreground leading-relaxed">
                     {faq.a}
-                  </div>
-                </details>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </section>
 
