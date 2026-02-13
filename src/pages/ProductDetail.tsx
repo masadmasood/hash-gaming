@@ -76,7 +76,7 @@ const ProductDetail = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-2xl font-semibold text-foreground">PKR {product.pricePKR.toLocaleString()}</span>
-              <span className={`inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-button border ${condition.color}`}>
+              <span className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-button border border-condition/40 text-condition">
                 {condition.label} · {condition.grade}
               </span>
               {product.isCombo && <span className="inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>}

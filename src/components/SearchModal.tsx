@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Search, X } from "lucide-react";
 import { products } from "@/data/products";
 
@@ -45,20 +44,27 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg bg-card border-border p-0 gap-0 [&>button]:hidden">
-        <form onSubmit={handleSubmit} className="p-5 border-b border-border">
+        <form onSubmit={handleSubmit} className="px-5 pt-5 pb-4">
           <div className="relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
+            <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search products, brands..."
-              className="pl-10 pr-4 h-12 rounded-card border-border bg-background text-sm font-medium"
+              className="w-full pl-10 pr-10 h-12 rounded-card border border-border bg-surface text-sm font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground/30 transition-colors"
               autoFocus
             />
+            <button
+              type="button"
+              onClick={() => { onOpenChange(false); setQuery(""); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 h-6 w-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
           </div>
         </form>
         {suggestions.length > 0 && (
-          <div className="max-h-80 overflow-y-auto">
+          <div className="max-h-80 overflow-y-auto border-t border-border">
             {suggestions.map((p) => (
               <button
                 key={p.id}
@@ -77,19 +83,10 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
           </div>
         )}
         {query.trim() && suggestions.length === 0 && (
-          <div className="px-5 py-10 text-center text-sm text-muted-foreground">
+          <div className="px-5 py-10 text-center text-sm text-muted-foreground border-t border-border">
             No products found for "{query}"
           </div>
         )}
-        {/* Centered close button */}
-        <div className="flex justify-center py-4 border-t border-border">
-          <button
-            onClick={() => { onOpenChange(false); setQuery(""); }}
-            className="h-10 w-10 rounded-full border border-border bg-background hover:bg-surface flex items-center justify-center transition-colors"
-          >
-            <X className="h-4 w-4 text-muted-foreground" />
-          </button>
-        </div>
       </DialogContent>
     </Dialog>
   );
