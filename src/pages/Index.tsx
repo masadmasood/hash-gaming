@@ -227,24 +227,51 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* FAQ */}
         <section className="py-20">
           <div className="container max-w-3xl mx-auto">
-            <Card className="rounded-card border-border bg-card">
-              <CardContent className="p-12 md:p-16 text-center space-y-6">
-                <h2 className="text-3xl font-gaming text-foreground">Ready to Level Up?</h2>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  Browse our full collection of quality-tested, pre-owned gaming gear at unbeatable prices.
-                </p>
-                <div className="pt-2">
-                  <Link to="/shop">
-                    <Button variant="outline" className="h-12 px-8 rounded-button border-border text-foreground hover:bg-surface hover:border-foreground/20 font-semibold">
-                      Explore Shop →
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="text-center mb-10">
+              <h2 className="text-2xl font-gaming text-foreground">Frequently Asked Questions</h2>
+              <p className="text-sm text-muted-foreground mt-2">Got questions? We've got answers.</p>
+            </div>
+            <div className="space-y-3">
+              {[
+                { q: "Are all products tested before shipping?", a: "Yes, every single item is inspected, graded, and tested for full functionality before being listed on our store." },
+                { q: "What does the condition score mean?", a: "We grade every product on a scale of 1–10. Excellent (9–10) means near-new, Very Good (7–8) means minor cosmetic wear, and Good (5–6) means visible wear but fully functional." },
+                { q: "Do you offer returns or exchanges?", a: "We offer a 3-day exchange policy on all products. If the item doesn't match the listed condition, we'll replace it at no extra cost." },
+                { q: "How long does delivery take?", a: "Delivery takes 2–5 business days depending on your city. We ship nationwide across Pakistan with tracking on every order." },
+                { q: "Can I pay cash on delivery?", a: "Yes, we support Cash on Delivery (COD) for all orders within Pakistan. Online payment options are also available." },
+              ].map((faq, i) => (
+                <details key={i} className="group rounded-card border border-border bg-card">
+                  <summary className="flex items-center justify-between cursor-pointer px-6 py-4 text-sm font-medium text-foreground list-none">
+                    {faq.q}
+                    <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-90 shrink-0 ml-4" />
+                  </summary>
+                  <div className="px-6 pb-4 text-sm text-muted-foreground leading-relaxed">
+                    {faq.a}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-20">
+          <div className="container max-w-4xl mx-auto">
+            <div className="rounded-card border border-border p-14 md:p-20 text-center space-y-6">
+              <h2 className="text-3xl md:text-4xl font-gaming text-foreground">Ready to Level Up?</h2>
+              <p className="text-muted-foreground max-w-md mx-auto">
+                Browse our full collection of quality-tested, pre-owned gaming gear at unbeatable prices.
+              </p>
+              <div className="pt-3">
+                <Link to="/shop">
+                  <Button variant="outline" className="h-12 px-8 rounded-button border-border text-foreground hover:bg-surface hover:border-foreground/20 font-semibold">
+                    Explore Shop →
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
       </main>
