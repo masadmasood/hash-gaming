@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { products, reviews } from "@/data/products";
+import { productImages } from "@/data/productImages";
 import { PageTransition } from "@/components/PageTransition";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
@@ -51,7 +52,7 @@ const ProductDetail = () => {
           {/* Images */}
           <div className="space-y-4">
             <div className="aspect-[4/3] rounded-card overflow-hidden bg-surface border border-border">
-              <img src={product.images[selectedImage]} alt={product.title} className="h-full w-full object-cover" />
+              <img src={productImages[product.id] || product.images[selectedImage]} alt={product.title} className="h-full w-full object-cover" />
             </div>
             {product.images.length > 1 && (
               <div className="flex gap-2">

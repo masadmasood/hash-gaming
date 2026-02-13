@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Product } from "@/data/products";
+import { productImages } from "@/data/productImages";
 
 function getConditionStyle(score: number): { label: string; grade: string; colorClass: string } {
   if (score >= 9) return { label: "Excellent", grade: "9/10", colorClass: "text-condition-excellent border-condition-excellent/40" };
@@ -19,7 +20,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="overflow-hidden rounded-card border border-border bg-card transition-all duration-200 hover:border-foreground/20 h-full flex flex-col">
         <div className="relative aspect-[4/3] bg-surface overflow-hidden">
           <img
-            src={product.images[0]}
+            src={productImages[product.id] || product.images[0]}
             alt={product.title}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"

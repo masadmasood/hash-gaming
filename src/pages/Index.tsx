@@ -3,15 +3,19 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { PageTransition } from "@/components/PageTransition";
 import bannerImage from "@/assets/banner-arrivals.jpg";
+import catKeyboards from "@/assets/cat-keyboards.jpg";
+import catMouse from "@/assets/cat-mouse.jpg";
+import catHeadphones from "@/assets/cat-headphones.jpg";
 import { products, reviews, categories } from "@/data/products";
+import { productImages } from "@/data/productImages";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight, Zap, Award, Headphones } from "lucide-react";
+import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef } from "react";
 
-const categoryIcons: Record<string, typeof Headphones> = {
-  Keyboards: Zap,
-  Mouse: Award,
-  Headphones: Headphones,
+const categoryImages: Record<string, string> = {
+  Keyboards: catKeyboards,
+  Mouse: catMouse,
+  Headphones: catHeadphones,
 };
 
 const trendingProducts = products.filter((p) => !p.isCombo).slice(0, 8);
@@ -69,13 +73,11 @@ const Index = () => {
           <div className="container">
             <h2 className="text-2xl font-gaming text-foreground mb-8">Browse Categories</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {categories.map((cat) => {
-                const Icon = categoryIcons[cat];
-                return (
+              {categories.map((cat) => (
                   <Link key={cat} to={`/shop?category=${cat}`}>
                     <Card className="group rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 cursor-pointer overflow-hidden">
-                      <div className="aspect-[4/3] bg-surface overflow-hidden flex items-center justify-center">
-                        <Icon className="h-16 w-16 text-muted-foreground/30 group-hover:text-muted-foreground/50 transition-colors" />
+                      <div className="aspect-[4/3] bg-surface overflow-hidden">
+                        <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                       </div>
                       <CardContent className="p-4">
                         <h3 className="font-gaming text-foreground text-lg">{cat}</h3>
@@ -85,8 +87,7 @@ const Index = () => {
                       </CardContent>
                     </Card>
                   </Link>
-                );
-              })}
+              ))}
             </div>
           </div>
         </section>
@@ -136,7 +137,7 @@ const Index = () => {
                 <Link key={combo.id} to={`/product/${combo.id}`} className="block h-full">
                   <Card className="rounded-card border-border bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
                     <div className="aspect-[4/3] bg-surface relative overflow-hidden rounded-t-card">
-                      <img src={combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
+                      <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
                       <span className="absolute top-3 left-3 inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>
                     </div>
                     <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
