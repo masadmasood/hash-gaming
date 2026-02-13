@@ -18,7 +18,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        gaming: ["Space Grotesk", "Inter", "sans-serif"],
+        gaming: ["Barlow", "Inter", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -58,11 +58,11 @@ export default {
           DEFAULT: "hsl(var(--surface))",
           2: "hsl(var(--surface-2))",
         },
-        neon: {
-          purple: "hsl(var(--neon-purple))",
-          lime: "hsl(var(--neon-lime))",
+        condition: {
+          excellent: "hsl(var(--condition-excellent))",
+          verygood: "hsl(var(--condition-verygood))",
+          good: "hsl(var(--condition-good))",
         },
-        "star-gold": "hsl(var(--star-gold))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
