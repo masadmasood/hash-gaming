@@ -58,7 +58,15 @@ export default {
           DEFAULT: "hsl(var(--surface))",
           2: "hsl(var(--surface-2))",
         },
-        condition: "hsl(var(--condition))",
+        condition: {
+          DEFAULT: "hsl(var(--condition))",
+          excellent: "hsl(var(--condition-excellent))",
+          verygood: "hsl(var(--condition-verygood))",
+          good: "hsl(var(--condition-good))",
+          fair: "hsl(var(--condition-fair))",
+        },
+        star: "hsl(var(--star))",
+        discount: "hsl(var(--discount))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
