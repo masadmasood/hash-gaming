@@ -63,28 +63,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Promo Banner */}
-        <section className="py-4">
-          <div className="container">
-            <div className="rounded-card border border-border bg-card p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full border border-border flex items-center justify-center shrink-0">
-                  <Zap className="h-5 w-5 text-star" />
-                </div>
-                <div>
-                  <h3 className="font-gaming text-foreground text-lg">Flash Sale — Up to 45% Off</h3>
-                  <p className="text-sm text-muted-foreground">Limited stock on select keyboards & mice. Grab yours before they're gone.</p>
-                </div>
-              </div>
-              <Link to="/shop">
-                <Button variant="outline" className="rounded-button border-border text-foreground hover:bg-surface shrink-0">
-                  Shop Deals →
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* Categories */}
         <section className="py-12">
           <div className="container">
