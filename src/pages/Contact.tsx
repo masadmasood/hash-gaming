@@ -3,19 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Hash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { contactInfo, supportHours } from "@/data/siteData";
 
-const contactDetails = [
-  { icon: MapPin, label: "Location", value: "Karachi, Pakistan" },
-  { icon: Mail, label: "Email", value: "hammadparekh52@gmail.com" },
-  { icon: Phone, label: "Phone", value: "0313-2153277" },
-  { icon: Globe, label: "Social", value: "instagram.com/hashtechgaming" },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  location: MapPin, email: Mail, phone: Phone, hashtag: Hash,
+};
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +22,7 @@ const Contact = () => {
       return;
     }
     toast.success("Message sent! We'll get back to you soon.");
-    setForm({ name: "", email: "", subject: "", phone: "", message: "" });
+    setForm({ name: "", email: "", subject: "", message: "" });
   };
 
   return (
@@ -48,21 +46,26 @@ const Contact = () => {
               <p className="text-sm text-muted-foreground">Reach out through any of the channels below and we'll get back to you promptly.</p>
             </div>
             <div className="space-y-5">
-              {contactDetails.map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
-                  <div className="relative mt-1">
-                    <div className="h-2.5 w-2.5 rounded-full bg-foreground/60" />
+              {contactInfo.map((item) => {
+                const Icon = iconMap[item.type] || Hash;
+                return (
+                  <div key={item.label} className="flex items-start gap-4">
+                    <div className="relative mt-1">
+                       <div className="flex items-center justify-center h-8 w-8 rounded-full bg-secondary text-primary">
+                          <Icon className="h-4 w-4" />
+                       </div>
+                    </div>
+                    <div className="pt-0.5">
+                      <p className="text-sm font-medium text-foreground">{item.label}</p>
+                      <p className="text-sm text-muted-foreground">{item.value}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{item.label}</p>
-                    <p className="text-sm text-muted-foreground">{item.value}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="pt-4 border-t border-border">
               <p className="text-sm text-muted-foreground">
-                Our support hours are Monday–Saturday, 10:00 AM – 8:00 PM (PKT). Orders placed outside these hours will be processed on the next business day.
+                Our support hours are {supportHours}. Orders placed outside these hours will be processed on the next business day.
               </p>
             </div>
           </div>
@@ -85,10 +88,6 @@ const Contact = () => {
                 <div>
                   <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Subject</label>
                   <Input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="rounded-input border-border bg-background h-11" />
-                </div>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Phone</label>
-                  <Input value={form.phone || ""} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="e.g. 03xx-xxxxxxx" className="rounded-input border-border bg-background h-11" />
                 </div>
                 <div>
                   <label className="text-sm text-muted-foreground mb-1.5 block font-medium">Message *</label>

@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Hash } from "lucide-react";
+import { siteName, siteTagline, siteCopyright, instagramLink } from "@/data/siteData";
 
 export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="border-t border-border bg-card mt-16">
+    <footer className="bg-card mt-16">
       <div className="container py-12">
         <div className="grid grid-cols-12 gap-8">
           {/* Brand - spans 6 cols */}
           <div className="col-span-12 sm:col-span-6 space-y-3">
-            <h3 className="font-gaming-black text-foreground text-lg">HASHTECH</h3>
+            <h3 className="font-gaming-black text-foreground text-lg flex items-center gap-2 capitalize"><Hash className="h-5 w-5" /> Hash Tech</h3>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Premium pre-owned gaming gear. Quality tested and verified in Pakistan. Every item inspected before shipping.
+              {siteTagline}
             </p>
           </div>
 
@@ -50,7 +51,7 @@ export function Footer() {
         <Separator className="my-8 bg-border" />
         <div className="flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            © 2026 Hashtech Gaming. All rights reserved.
+            {siteCopyright}
           </p>
           <button
             onClick={scrollToTop}

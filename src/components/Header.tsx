@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/context/CartContext";
 import { useState, useRef } from "react";
 import { SearchModal } from "@/components/SearchModal";
+import logo from "../assets/logo.png";
 
 const shopCategories = [
   { name: "Keyboards", icon: Keyboard, to: "/shop?category=Keyboards" },
@@ -34,9 +35,10 @@ export function Header() {
       <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-background/70 backdrop-blur-xl">
         <div className="container h-full flex items-center justify-between gap-6">
           <Link to="/" className="shrink-0">
-            <span className="text-xl font-gaming-black tracking-tight text-foreground">
+            {/* <span className="text-xl font-gaming-black tracking-tight text-foreground">
               HASHTECH
-            </span>
+            </span> */}
+            <img src={logo} alt="Hashtech" className="size-16 object-cover" />
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">

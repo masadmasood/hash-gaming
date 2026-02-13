@@ -1,43 +1,54 @@
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { PageTransition } from "@/components/PageTransition";
-import bannerImage from "@/assets/banner-arrivals.jpg";
-import catKeyboards from "@/assets/cat-keyboards.jpg";
-import catMouse from "@/assets/cat-mouse.jpg";
-import catHeadphones from "@/assets/cat-headphones.jpg";
-import { products, reviews, categories } from "@/data/products";
-import { productImages } from "@/data/productImages";
+import { products, reviews, categories, productImages, categoryImages, bannerImage, faqs, whyUsReasons } from "@/data/siteData";
 import { Card, CardContent } from "@/components/ui/card";
-import { ShieldCheck, PackageCheck, Truck, Star, ArrowRight, Quote, ChevronLeft, ChevronRight, Plus, Minus, Send } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import {
+  ShieldCheck,
+  PackageCheck,
+  Truck,
+  Star,
+  ArrowRight,
+  Quote,
+  Minus,
+  Plus,
+  Gamepad2,
+  Headphones,
+  Keyboard,
+  Mouse,
+  Zap,
+  Trophy,
+  ChevronLeft,
+  ChevronRight
+} from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import type { CarouselApi } from "@/components/ui/carousel";
 import { toast } from "sonner";
-
-const categoryImages: Record<string, string> = {
-  Keyboards: catKeyboards,
-  Mouse: catMouse,
-  Headphones: catHeadphones,
-};
 
 const trendingProducts = products.filter((p) => !p.isCombo).slice(0, 8);
 const combos = products.filter((p) => p.isCombo);
-const displayReviews = reviews.slice(0, 3);
 
-const whyUs = [
-  { icon: ShieldCheck, title: "Quality Tested", desc: "Every single item is inspected, graded honestly, and tested for performance before listing on our store." },
-  { icon: PackageCheck, title: "Secure Packaging", desc: "We double-box every order with protective foam inserts to ensure your gear arrives in perfect condition." },
-  { icon: Truck, title: "Nationwide Delivery", desc: "Fast and reliable shipping to all major cities across Pakistan with real-time tracking on every order." },
-  { icon: Star, title: "Trusted by Gamers", desc: "Hundreds of verified buyers trust us for honest condition grading, fair prices, and excellent after-sales support." },
-];
+const whyUs = whyUsReasons;
+
+const whyUsIcons = [ShieldCheck, PackageCheck, Truck, Trophy];
 
 const Index = () => {
-  const [reviewIndex, setReviewIndex] = useState(0);
   const [newsletterEmail, setNewsletterEmail] = useState("");
-
-  const nextReview = () => setReviewIndex((i) => (i + 1) % displayReviews.length);
-  const prevReview = () => setReviewIndex((i) => (i - 1 + displayReviews.length) % displayReviews.length);
+  const [reviewsApi, setReviewsApi] = useState<CarouselApi>();
 
   const handleNewsletter = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,7 +66,7 @@ const Index = () => {
         {/* Hero */}
         <section className="py-20 md:py-28">
           <div className="container text-center max-w-3xl mx-auto space-y-6">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-gaming-black tracking-tight text-foreground leading-[0.95]">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[0.95]">
               USED GAMING GEAR
               <br />
               <span className="text-muted-foreground">TESTED & READY</span>
@@ -65,8 +76,8 @@ const Index = () => {
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
               <Link to="/shop">
-                <Button className="h-12 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold">
-                  Shop Now →
+                <Button className="h-12 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold gap-2">
+                  Shop Now <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/shop?combo=true">
@@ -81,14 +92,14 @@ const Index = () => {
         {/* Categories */}
         <section className="pb-20">
           <div className="container">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {categories.map((cat) => (
                 <Link key={cat} to={`/shop?category=${cat}`}>
-                  <div className="group relative aspect-[16/9] rounded-card overflow-hidden cursor-pointer border border-border/30">
+                  <div className="group relative aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
                     <img src={categoryImages[cat]} alt={cat} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-background/50 group-hover:bg-background/30 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                      <h3 className="font-gaming-black text-foreground text-xl md:text-2xl tracking-wide">{cat.toUpperCase()}</h3>
+                      <h3 className="font-bold text-foreground text-xl md:text-2xl tracking-wide">{cat.toUpperCase()}</h3>
                       <p className="text-xs text-foreground/50 mt-1">
                         {products.filter((p) => p.category === cat && !p.isCombo).length} products
                       </p>
@@ -96,20 +107,32 @@ const Index = () => {
                   </div>
                 </Link>
               ))}
+              <Link to="/shop?combo=true">
+                <div className="group relative aspect-[9/16] rounded-card overflow-hidden cursor-pointer border border-border/30">
+                  <img src={productImages[combos[0]?.id] || bannerImage} alt="Combos" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-background/50 backdrop-blur-sm group-hover:bg-background/30 group-hover:backdrop-blur-sm transition-all duration-300" />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                    <h3 className="font-bold text-foreground text-xl md:text-2xl tracking-wide">COMBOS</h3>
+                    <p className="text-xs text-foreground/50 mt-1">
+                      {combos.length} bundles
+                    </p>
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
 
         {/* Trending */}
-        <section className="py-16">
+        <section className="py-28">
           <div className="container">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 className="text-2xl font-gaming text-foreground">Trending Products</h2>
+                <h2 className="text-2xl font-bold text-foreground">Trending Products</h2>
                 <p className="text-sm text-muted-foreground mt-1">Our most popular picks this week</p>
               </div>
-              <Link to="/shop" className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1">
-                View all <ArrowRight className="h-3 w-3 ml-1" />
+              <Link to="/shop" className="hidden sm:flex text-sm text-muted-foreground hover:text-foreground transition-colors items-center gap-1 group">
+                View all <ArrowRight className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -125,119 +148,170 @@ const Index = () => {
           className="relative py-24 md:py-32 bg-fixed bg-cover bg-center"
           style={{ backgroundImage: `url(${bannerImage})` }}
         >
-          <div className="absolute inset-0 bg-background/70" />
+          <div className="absolute inset-0 bg-background/50 backdrop-blur-sm" />
           <div className="relative z-10 container text-center space-y-4">
-            <h3 className="font-gaming-black text-foreground text-2xl md:text-3xl">New Arrivals Every Week</h3>
-            <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+            <h3 className="font-bold text-foreground text-2xl md:text-3xl">New Arrivals Every Week</h3>
+            <p className="text-base font-normal text-foreground/70 max-w-lg mx-auto">
               We source fresh inventory from top gaming brands weekly. Follow us to never miss a drop.
             </p>
-            <Link to="/shop">
-              <Button variant="outline" className="rounded-button border-foreground/20 text-foreground hover:bg-foreground/10 mt-3">
-                Browse New Stock →
+            <Link to="/shop" className="block mt-2">
+              <Button className="h-12 px-6 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold gap-2">
+                Browse New Stock <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </Link>
           </div>
         </section>
 
         {/* Combo Deals */}
-        <section className="py-16">
+        <section className="pt-16 pb-32">
           <div className="container">
-            <div className="flex items-center justify-between mb-10">
-              <div>
-                <h2 className="text-2xl font-gaming text-foreground">Combo Deals</h2>
-                <p className="text-sm text-muted-foreground mt-1">Save more when you bundle</p>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <div className="flex items-center justify-between mb-10">
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground">Combo Deals</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Save more when you bundle</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex gap-2">
+                    <CarouselPrevious className="static translate-y-0 size-10" />
+                    <CarouselNext className="static translate-y-0 size-10" />
+                  </div>
+                </div>
               </div>
-              <Link to="/shop?combo=true" className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
-                View all <ArrowRight className="h-3 w-3 ml-1" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {combos.map((combo) => (
-                <Link key={combo.id} to={`/product/${combo.id}`} className="block h-full">
-                  <Card className="rounded-card border-border/30 bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
-                    <div className="aspect-[4/3] bg-background relative overflow-hidden rounded-t-card">
-                      <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover" />
-                      <span className="absolute top-3 left-3 inline-flex text-xs font-semibold px-2.5 py-1 rounded-button bg-foreground text-background">COMBO</span>
+              <CarouselContent>
+                {combos.map((combo) => (
+                  <CarouselItem key={combo.id} className="md:basis-1/2 lg:basis-1/4">
+                    <Link to={`/product/${combo.id}`} className="block h-full">
+                      <Card className="rounded-card border-border/30 bg-card hover:border-foreground/20 transition-all duration-200 h-full flex flex-col">
+                        <div className="aspect-[4/3] bg-background relative overflow-hidden rounded-t-card">
+                          <img src={productImages[combo.id] || combo.images[0]} alt={combo.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-110" />
+                          <span className="absolute top-3 left-3 inline-flex text-[10px] font-semibold px-2 py-1 rounded-full bg-foreground text-background">COMBO</span>
+                        </div>
+                        <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
+                          <h3 className="font-semibold text-sm text-foreground">{combo.title}</h3>
+                          <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{combo.comboItems?.join(" + ")}</p>
+                          <p className="font-semibold text-foreground">PKR {combo.pricePKR.toLocaleString()}</p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+        </section>
+
+        {/* Why Us (Updated) */}
+        <section className="py-24 relative overflow-hidden bg-card">
+          <div className="container relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-3xl font-bold text-foreground mb-6">
+                  WHY CHOOSE <br />
+                  <span className="text-primary">HASHTECH?</span>
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                  We are a team of passionate gamers who understand the importance of reliable gear.
+                  We don't just sell used products; we give them a second life.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {whyUs.map((item, idx) => {
+                    const Icon = whyUsIcons[idx] || ShieldCheck;
+                    return (
+                      <div key={item.title} className="flex flex-col items-start gap-4 p-6 rounded-card bg-background/50 border border-border/50 transition-colors">
+                        <div className="shrink-0 h-10 w-10 rounded-lg bg-secondary flex items-center justify-center text-primary">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-lg mb-1">{item.title}</h4>
+                          <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="relative">
+                <div className="aspect-[4/5] rounded-[3rem] overflow-hidden bg-secondary/30 relative">
+                  <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:24px_24px]" />
+                  <div className="relative h-full flex flex-col items-center justify-center p-8 text-center bg-background/20 backdrop-blur-sm border border-white/10 m-8 rounded-[2rem]">
+
+                    <div className="flex -space-x-4 rtl:space-x-reverse mb-6">
+                      {[1, 2, 3, 4].map((i) => (
+                        <div key={i} className="w-12 h-12 rounded-full border-2 border-background overflow-hidden bg-muted">
+                          <img src={`https://i.pravatar.cc/150?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
+                        </div>
+                      ))}
                     </div>
-                    <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
-                      <h3 className="font-semibold text-sm text-foreground">{combo.title}</h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{combo.comboItems?.join(" + ")}</p>
-                      <p className="font-semibold text-foreground">PKR {combo.pricePKR.toLocaleString()}</p>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+
+                    <div className="text-7xl font-extrabold text-foreground mb-2">10K+</div>
+                    <div className="text-xl text-muted-foreground font-semibold">Happy Gamers Served</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Why Us */}
-        <section className="py-20 bg-card">
+        {/* Reviews - Attractive Version */}
+        <section className="py-24">
           <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl font-gaming text-foreground">Why Hashtech Gaming?</h2>
-              <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">Everything we do is built around trust, quality, and the gaming community.</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {whyUs.map((item) => (
-                <div key={item.title} className="text-center space-y-3">
-                  <div className="h-12 w-12 rounded-full border border-border flex items-center justify-center mx-auto">
-                    <item.icon className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                  <h3 className="font-gaming text-foreground text-base">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-7xl mx-auto"
+            >
+              <div className="flex items-end justify-between mb-10">
+                <div className="text-start">
+                  <h2 className="text-2xl font-bold text-foreground">What the Squad Says</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Join thousands of satisfied gamers in Pakistan.</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+                <div className="flex gap-2">
+                  <CarouselPrevious className="static translate-y-0 size-10" />
+                  <CarouselNext className="static translate-y-0 size-10" />
+                </div>
+              </div>
 
-        {/* Reviews */}
-        <section className="py-16">
-          <div className="container">
-            <div className="flex items-center justify-between mb-10">
-              <div>
-                <h2 className="text-2xl font-gaming text-foreground">What Gamers Say</h2>
-                <p className="text-sm text-muted-foreground mt-1">Real feedback from verified buyers</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button onClick={prevReview} className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-card transition-colors">
-                  <ChevronLeft className="h-4 w-4 text-foreground" />
-                </button>
-                <button onClick={nextReview} className="h-9 w-9 rounded-full border border-border flex items-center justify-center hover:bg-card transition-colors">
-                  <ChevronRight className="h-4 w-4 text-foreground" />
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {displayReviews.map((review) => (
-                <div key={review.id} className="relative p-6 rounded-card border border-border/30 bg-card flex flex-col justify-between">
-                  <div className="absolute top-4 right-4 opacity-[0.06]">
-                    <Quote className="h-12 w-12 text-foreground" />
-                  </div>
-                  <div className="space-y-4 relative z-10">
-                    <div className="flex gap-0.5">
-                      {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-star text-star" />
-                      ))}
-                      {Array.from({ length: 5 - review.rating }).map((_, i) => (
-                        <Star key={`e-${i}`} className="h-4 w-4 text-border" />
-                      ))}
+              <CarouselContent>
+                {reviews.map((review) => (
+                  <CarouselItem key={review.id} className="md:basis-1/2 lg:basis-1/3 p-4">
+                    <div className="h-full p-8 rounded-card bg-secondary/10 border border-border/50 hover:bg-secondary/20 transition-all duration-300 flex flex-col relative overflow-hidden group">
+                      <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10 group-hover:text-primary/20 transition-colors" />
+
+                      <div className="flex gap-1 mb-6">
+                        {Array.from({ length: review.rating }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-orange-500 text-orange-500" />
+                        ))}
+                      </div>
+
+                      <p className="text-muted-foreground leading-relaxed mb-8 flex-1 relative z-10 font-normal">
+                        "{review.text}"
+                      </p>
+
+                      <div className="flex items-center gap-4 mt-auto">
+                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
+                          <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-foreground">{review.name}</h4>
+                          <span className="text-xs text-primary font-medium flex items-center gap-1">
+                            <ShieldCheck className="w-3 h-3" /> Verified Buyer
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed italic">"{review.text}"</p>
-                  </div>
-                  <div className="flex items-center gap-3 mt-5 pt-4 border-t border-border/30">
-                    <div className="h-9 w-9 rounded-full bg-surface-2 overflow-hidden">
-                      <img src={review.image} alt={review.name} className="h-full w-full object-cover" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-sm text-foreground">{review.name}</p>
-                      <p className="text-xs text-muted-foreground">Verified Buyer</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </section>
 
@@ -245,54 +319,25 @@ const Index = () => {
         <section className="py-20">
           <div className="container max-w-3xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-2xl font-gaming text-foreground">Frequently Asked Questions</h2>
+              <h2 className="text-2xl font-bold text-foreground">Frequently Asked Questions</h2>
               <p className="text-sm text-muted-foreground mt-2">Got questions? We've got answers.</p>
             </div>
             <Accordion type="single" collapsible defaultValue="faq-0" className="space-y-3">
-              {[
-                { q: "Are all products tested before shipping?", a: "Yes, every single item is inspected, graded, and tested for full functionality before being listed on our store." },
-                { q: "What does the condition score mean?", a: "We grade every product on a scale of 1–10. Excellent (9–10) means near-new, Very Good (7–8) means minor cosmetic wear, and Good (5–6) means visible wear but fully functional." },
-                { q: "Do you offer returns or exchanges?", a: "We offer a 3-day exchange policy on all products. If the item doesn't match the listed condition, we'll replace it at no extra cost." },
-                { q: "How long does delivery take?", a: "Delivery takes 2–5 business days depending on your city. We ship nationwide across Pakistan with tracking on every order." },
-                { q: "Can I pay cash on delivery?", a: "Yes, we support Cash on Delivery (COD) for all orders within Pakistan. Online payment options are also available." },
-              ].map((faq, i) => (
+              {faqs.map((faq, i) => (
                 <AccordionItem key={i} value={`faq-${i}`} className="group rounded-card border border-border/30 bg-card px-6 data-[state=open]:border-foreground/20 transition-all duration-200">
                   <AccordionTrigger className="py-5 text-[15px] text-foreground hover:no-underline [&>svg]:hidden font-['Inter',sans-serif] font-normal">
-                    <span className="text-left">{faq.q}</span>
+                    <span className="text-left">{faq.question}</span>
                     <div className="ml-4 shrink-0">
                       <Plus className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=open]:hidden" />
                       <Minus className="h-4 w-4 text-muted-foreground transition-transform duration-200 hidden group-data-[state=open]:block" />
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-5 text-sm text-muted-foreground leading-relaxed font-['Inter',sans-serif]">
-                    {faq.a}
+                    {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
-          </div>
-        </section>
-
-        {/* Newsletter */}
-        <section className="py-20 bg-card">
-          <div className="container max-w-2xl mx-auto text-center space-y-6">
-            <h2 className="text-2xl font-gaming text-foreground">Stay in the Loop</h2>
-            <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              Subscribe to get notified about new drops, exclusive combo deals, and gaming gear restocks.
-            </p>
-            <form onSubmit={handleNewsletter} className="flex items-center gap-3 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="rounded-button border-border bg-background h-11 flex-1"
-              />
-              <Button type="submit" className="h-11 px-5 rounded-button bg-foreground text-background hover:bg-foreground/80 font-semibold shrink-0">
-                <Send className="h-4 w-4 mr-2" />
-                Subscribe
-              </Button>
-            </form>
           </div>
         </section>
 

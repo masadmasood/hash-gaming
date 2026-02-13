@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { products, categories, brands } from "@/data/products";
+import { products, filterCategories, brands } from "@/data/siteData";
 import { ProductCard } from "@/components/ProductCard";
 import { PageTransition } from "@/components/PageTransition";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { X } from "lucide-react";
+import { Search } from "lucide-react";
 
 type SortOption = "newest" | "price-low" | "price-high" | "condition";
 
@@ -23,7 +23,8 @@ const Shop = () => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 35000]);
   const [conditionMin, setConditionMin] = useState(1);
-  const [inStockOnly, setInStockOnly] = useState(false);
+  const [showInStock, setShowInStock] = useState(true);
+  const [showOutOfStock, setShowOutOfStock] = useState(false);
   const [sort, setSort] = useState<SortOption>("newest");
 
   // Sync category from URL when navigating from homepage category links
@@ -37,14 +38,26 @@ const Shop = () => {
   }, [searchParams]);
 
   const filtered = useMemo(() => {
-    let result = products.filter((p) => {
+    const result = products.filter((p) => {
       if (showCombos && !p.isCombo) return false;
       if (search && !p.title.toLowerCase().includes(search.toLowerCase()) && !p.brand.toLowerCase().includes(search.toLowerCase())) return false;
-      if (selectedCategories.length && !selectedCategories.includes(p.category)) return false;
+      if (selectedCategories.length) {
+        const wantsCombos = selectedCategories.includes("Combos");
+        const otherCats = selectedCategories.filter(c => c !== "Combos");
+        const matchesCategory = otherCats.length ? otherCats.includes(p.category) : false;
+        const matchesCombo = wantsCombos && p.isCombo;
+        if (!matchesCategory && !matchesCombo) return false;
+      }
       if (selectedBrands.length && !selectedBrands.includes(p.brand)) return false;
       if (p.pricePKR < priceRange[0] || p.pricePKR > priceRange[1]) return false;
       if (p.conditionScore < conditionMin) return false;
-      if (inStockOnly && p.stockQty === 0) return false;
+      
+      const isInStock = p.stockQty > 0;
+      if (showInStock && !showOutOfStock && !isInStock) return false;
+      if (!showInStock && showOutOfStock && isInStock) return false;
+      if (!showInStock && !showOutOfStock) return false; // Hide all
+      // If both are true, show all
+
       return true;
     });
 
@@ -55,7 +68,7 @@ const Shop = () => {
       default: break;
     }
     return result;
-  }, [search, selectedCategories, selectedBrands, priceRange, conditionMin, inStockOnly, sort, showCombos]);
+  }, [search, selectedCategories, selectedBrands, priceRange, conditionMin, showInStock, showOutOfStock, sort, showCombos]);
 
   const toggleCategory = (cat: string) => {
     setSelectedCategories((prev) => prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]);
@@ -70,25 +83,31 @@ const Shop = () => {
         <h1 className="text-3xl font-semibold mb-8 text-foreground">
           {showCombos ? "Combo Deals" : "Shop"}
         </h1>
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* Sidebar Filters */}
           <aside className="w-full lg:w-64 shrink-0 space-y-6">
-            <div>
+            <div className="bg-card border border-border/50 rounded-card p-5 shadow-sm space-y-6 sticky top-24">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search products..."
+                placeholder="Search..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="rounded-input border-border bg-surface h-11"
+                className="rounded-input border-border bg-surface h-10 pl-9"
               />
             </div>
             <Separator className="bg-border" />
             <div>
               <h4 className="text-sm font-semibold text-foreground mb-3">Category</h4>
               <div className="space-y-2">
-                {categories.map((cat) => (
-                  <label key={cat} className="flex items-center gap-2 text-sm cursor-pointer">
-                    <Checkbox checked={selectedCategories.includes(cat)} onCheckedChange={() => toggleCategory(cat)} />
-                    <span className="text-muted-foreground">{cat}</span>
+                {filterCategories.map((cat) => (
+                  <label key={cat} className="flex items-center gap-2 text-sm cursor-pointer hover:text-primary transition-colors group">
+                    <Checkbox 
+                        checked={selectedCategories.includes(cat)} 
+                        onCheckedChange={() => toggleCategory(cat)} 
+                        className="data-[state=checked]:bg-muted-foreground data-[state=checked]:text-background border-muted-foreground/50"
+                    />
+                    <span className="text-muted-foreground group-hover:text-foreground transition-colors">{cat}</span>
                   </label>
                 ))}
               </div>
@@ -98,9 +117,13 @@ const Shop = () => {
               <h4 className="text-sm font-semibold text-foreground mb-3">Brand</h4>
               <div className="space-y-2">
                 {brands.map((brand) => (
-                  <label key={brand} className="flex items-center gap-2 text-sm cursor-pointer">
-                    <Checkbox checked={selectedBrands.includes(brand)} onCheckedChange={() => toggleBrand(brand)} />
-                    <span className="text-muted-foreground">{brand}</span>
+                  <label key={brand} className="flex items-center gap-2 text-sm cursor-pointer hover:text-primary transition-colors group">
+                    <Checkbox 
+                        checked={selectedBrands.includes(brand)} 
+                        onCheckedChange={() => toggleBrand(brand)} 
+                        className="data-[state=checked]:bg-muted-foreground data-[state=checked]:text-background border-muted-foreground/50"
+                    />
+                    <span className="text-muted-foreground group-hover:text-foreground transition-colors">{brand}</span>
                   </label>
                 ))}
               </div>
@@ -133,10 +156,28 @@ const Shop = () => {
               />
             </div>
             <Separator className="bg-border" />
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
-              <Checkbox checked={inStockOnly} onCheckedChange={(v) => setInStockOnly(!!v)} />
-              <span className="text-muted-foreground">In Stock Only</span>
-            </label>
+            <div>
+              <label className="text-sm font-semibold text-foreground mb-3 block">Stock Status</label>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm cursor-pointer hover:text-primary transition-colors">
+                  <Checkbox 
+                     checked={showInStock}
+                     onCheckedChange={(v) => setShowInStock(!!v)} 
+                     className="data-[state=checked]:bg-muted-foreground data-[state=checked]:text-background border-muted-foreground/50"
+                  />
+                  <span className="text-muted-foreground">Show In-Stock Only</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer hover:text-primary transition-colors">
+                  <Checkbox 
+                     checked={showOutOfStock} 
+                     onCheckedChange={(v) => setShowOutOfStock(!!v)} 
+                     className="data-[state=checked]:bg-muted-foreground data-[state=checked]:text-background border-muted-foreground/50"
+                  />
+                  <span className="text-muted-foreground">Show Out-of-Stock Only</span>
+                </label>
+              </div>
+            </div>
+            </div>
           </aside>
 
           {/* Products */}
@@ -162,7 +203,7 @@ const Shop = () => {
                 <p>No products found matching your filters.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {filtered.map((p) => (
                   <ProductCard key={p.id} product={p} />
                 ))}

@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Search, X } from "lucide-react";
-import { products } from "@/data/products";
+import { products, productImages } from "@/data/siteData";
 
 interface SearchModalProps {
   open: boolean;
@@ -14,7 +14,9 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
   const navigate = useNavigate();
 
   const suggestions = useMemo(() => {
-    if (!query.trim()) return [];
+    if (!query.trim()) {
+        return products.slice(0, 5);
+    }
     const q = query.toLowerCase();
     return products
       .filter(
@@ -65,6 +67,11 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
         </form>
         {suggestions.length > 0 && (
           <div className="max-h-80 overflow-y-auto border-t border-border">
+            {(!query.trim() ? (
+                <div className="px-4 py-2 text-xs font-semibold text-muted-foreground bg-muted/30">
+                    Trending Products
+                </div>
+            ) : null)}
             {suggestions.map((p) => (
               <button
                 key={p.id}
@@ -72,7 +79,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
                 className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-surface transition-colors"
               >
                 <div className="h-10 w-10 rounded-lg bg-surface-2 overflow-hidden shrink-0">
-                  <img src={p.images[0]} alt="" className="h-full w-full object-cover" />
+                  <img src={productImages[p.id] || p.images[0]} alt="" className="h-full w-full object-cover" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">{p.title}</p>

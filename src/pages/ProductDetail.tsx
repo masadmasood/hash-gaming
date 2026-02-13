@@ -1,6 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { products, reviews } from "@/data/products";
-import { productImages } from "@/data/productImages";
+import { products, reviews, productImages } from "@/data/siteData";
 import { PageTransition } from "@/components/PageTransition";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
