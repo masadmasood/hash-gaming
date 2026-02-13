@@ -1,15 +1,15 @@
-import { MessageCircle } from "lucide-react";
-
 export function WhatsAppButton() {
   return (
     <a
       href="https://wa.me/923132153277"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center h-14 w-14 rounded-full bg-neon-lime text-black shadow-lg hover:scale-110 transition-transform duration-200 hover:shadow-[0_0_25px_hsl(100_70%_50%/0.4)]"
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center h-14 w-14 rounded-full bg-[#25D366] shadow-lg hover:scale-110 transition-transform duration-200 hover:shadow-[0_0_25px_rgba(37,211,102,0.4)]"
       aria-label="Chat on WhatsApp"
     >
-      <MessageCircle className="h-6 w-6" />
+      <svg viewBox="0 0 32 32" className="h-7 w-7 fill-white">
+        <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.502 1.14 6.742 3.07 9.372L1.06 31.44l6.256-2.004c2.512 1.7 5.534 2.692 8.688 2.692C24.826 32.128 32 24.952 32 16.124S24.826 0 16.004 0zm9.35 22.622c-.394 1.108-1.946 2.028-3.196 2.296-.856.182-1.974.326-5.738-1.234-4.818-1.994-7.918-6.882-8.16-7.202-.232-.32-1.946-2.594-1.946-4.948 0-2.354 1.234-3.51 1.672-3.992.35-.386.924-.578 1.472-.578.178 0 .338.008.482.016.438.018.658.044.948.734.36.86 1.234 3.012 1.34 3.232.108.22.216.516.068.808-.138.3-.258.434-.478.686-.22.252-.428.446-.648.718-.198.238-.42.494-.172.932.248.43 1.1 1.816 2.366 2.942 1.63 1.448 2.91 1.922 3.418 2.134.368.152.806.116 1.068-.154.332-.342.742-.908 1.16-1.466.296-.398.672-.448 1.078-.298.41.146 2.558 1.208 2.996 1.428.438.22.73.332.838.514.106.182.106 1.06-.288 2.168z" />
+      </svg>
     </a>
   );
 }
