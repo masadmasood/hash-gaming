@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { ArrowUp, Hash } from "lucide-react";
-import { siteName, siteTagline, siteCopyright, instagramLink } from "@/data/siteData";
+import { siteTagline, siteCopyright } from "@/data/siteData";
 
 export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="bg-card mt-16">
-      <div className="container py-12">
-        <div className="grid grid-cols-12 gap-6 sm:gap-8">
+    <footer className="bg-card border-t border-border/50">
+      <div className="container pt-14 pb-20">
+        <div className="grid grid-cols-12 gap-8 sm:gap-10">
           {/* Brand - spans 6 cols */}
           <div className="col-span-12 sm:col-span-6 space-y-3">
             <h3 className="font-gaming-black text-foreground text-lg flex items-center gap-2 capitalize"><Hash className="h-5 w-5" /> Hash Tech</h3>
@@ -22,10 +24,10 @@ export function Footer() {
           <div className="col-span-6 sm:col-span-2 space-y-3">
             <h4 className="font-semibold text-foreground text-sm">Shop</h4>
             <nav className="flex flex-col gap-2">
-              <Link to="/shop?category=Keyboards" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Keyboards</Link>
-              <Link to="/shop?category=Mouse" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mouse</Link>
-              <Link to="/shop?category=Headphones" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Headphones</Link>
-              <Link to="/shop" className="text-sm text-muted-foreground hover:text-foreground transition-colors">All Products</Link>
+              <Link href="/shop?category=Keyboards" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Keyboards</Link>
+              <Link href="/shop?category=Mouse" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Mouse</Link>
+              <Link href="/shop?category=Headphones" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Headphones</Link>
+              <Link href="/shop" className="text-sm text-muted-foreground hover:text-foreground transition-colors">All Products</Link>
             </nav>
           </div>
 
@@ -33,9 +35,8 @@ export function Footer() {
           <div className="col-span-6 sm:col-span-2 space-y-3">
             <h4 className="font-semibold text-foreground text-sm">Support</h4>
             <nav className="flex flex-col gap-2">
-              <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Us</Link>
-              <Link to="/exchange-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Exchange Policy</Link>
-              <Link to="/cart" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Cart</Link>
+              <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Us</Link>
+              <Link href="/exchange-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Exchange Policy</Link>
             </nav>
           </div>
 
@@ -43,13 +44,13 @@ export function Footer() {
           <div className="col-span-6 sm:col-span-2 space-y-3">
             <h4 className="font-semibold text-foreground text-sm">Legal</h4>
             <nav className="flex flex-col gap-2">
-              <Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms & Conditions</Link>
+              <Link href="/privacy-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms & Conditions</Link>
             </nav>
           </div>
         </div>
-        <Separator className="my-8 bg-border" />
-        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-2 text-center sm:text-left">
+        <Separator className="my-10 bg-border" />
+        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4 text-center sm:text-left">
           <p className="text-xs text-muted-foreground">
             {siteCopyright}
           </p>

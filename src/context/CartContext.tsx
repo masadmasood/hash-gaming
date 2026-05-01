@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useReducer, useEffect } from "react";
+"use client";
+
+import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
 import { Product } from "@/data/siteData";
 
 export interface CartItem {
@@ -14,7 +16,10 @@ type CartAction =
   | { type: "ADD"; product: Product; quantity: number }
   | { type: "REMOVE"; productId: string }
   | { type: "UPDATE_QTY"; productId: string; quantity: number }
-  | { type: "CLEAR" };
+  | { type: "CLEAR" }
+  | { type: "HYDRATE"; state: CartState };
+
+const initialState: CartState = { items: [] };
 
 const CartContext = createContext<{
   items: CartItem[];
@@ -24,10 +29,13 @@ const CartContext = createContext<{
   clearCart: () => void;
   totalItems: number;
   subtotal: number;
+  isHydrated: boolean;
 } | null>(null);
 
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
+    case "HYDRATE":
+      return action.state;
     case "ADD": {
       const existing = state.items.find((i) => i.product.id === action.product.id);
       if (existing) {
@@ -59,20 +67,29 @@ function cartReducer(state: CartState, action: CartAction): CartState {
   }
 }
 
-function loadCart(): CartState {
+function readStoredCart(): CartState {
   try {
-    const data = localStorage.getItem("hashtech-cart");
+    const data = window.localStorage.getItem("hashtech-cart");
     if (data) return JSON.parse(data);
-  } catch {}
-  return { items: [] };
+  } catch {
+    // Ignore corrupt or unavailable storage and fall back to an empty cart.
+  }
+  return initialState;
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, undefined, loadCart);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("hashtech-cart", JSON.stringify(state));
-  }, [state]);
+    dispatch({ type: "HYDRATE", state: readStoredCart() });
+    setIsHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    window.localStorage.setItem("hashtech-cart", JSON.stringify(state));
+  }, [state, isHydrated]);
 
   const addToCart = (product: Product, quantity = 1) => dispatch({ type: "ADD", product, quantity });
   const removeFromCart = (productId: string) => dispatch({ type: "REMOVE", productId });
@@ -82,7 +99,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const subtotal = state.items.reduce((sum, i) => sum + i.product.pricePKR * i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items: state.items, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, subtotal }}>
+    <CartContext.Provider value={{ items: state.items, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, subtotal, isHydrated }}>
       {children}
     </CartContext.Provider>
   );

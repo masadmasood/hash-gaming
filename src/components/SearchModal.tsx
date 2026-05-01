@@ -1,5 +1,8 @@
-import { useState, useMemo, useCallback, memo } from "react";
-import { useNavigate } from "react-router-dom";
+"use client";
+
+import { useState, useMemo, memo } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Search, X, ArrowRight, TrendingUp } from "lucide-react";
@@ -12,7 +15,14 @@ interface SearchModalProps {
 
 export const SearchModal = memo(function SearchModal({ open, onOpenChange }: SearchModalProps) {
   const [query, setQuery] = useState("");
-  const navigate = useNavigate();
+  const router = useRouter();
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      setQuery("");
+    }
+    onOpenChange(nextOpen);
+  };
 
   const suggestions = useMemo(() => {
     if (!query.trim()) {
@@ -30,22 +40,22 @@ export const SearchModal = memo(function SearchModal({ open, onOpenChange }: Sea
   }, [query]);
 
   const handleSelect = (productId: string) => {
-    onOpenChange(false);
+    handleOpenChange(false);
     setQuery("");
-    navigate(`/product/${productId}`);
+    router.push(`/product/${productId}`);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      onOpenChange(false);
-      navigate(`/shop?search=${encodeURIComponent(query.trim())}`);
+      handleOpenChange(false);
+      router.push(`/shop?search=${encodeURIComponent(query.trim())}`);
       setQuery("");
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-xl bg-card/95 backdrop-blur-xl border-border/50 p-0 gap-0 [&>button]:hidden rounded-2xl shadow-2xl overflow-hidden">
         {/* Search Input */}
         <form onSubmit={handleSubmit} className="p-4">
@@ -102,10 +112,12 @@ export const SearchModal = memo(function SearchModal({ open, onOpenChange }: Sea
                       onClick={() => handleSelect(p.id)}
                       className="w-full flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-left hover:bg-secondary/50 active:scale-[0.99] transition-all group"
                     >
-                      <div className="h-12 w-12 rounded-lg bg-secondary/50 overflow-hidden shrink-0 border border-border/30 group-hover:border-border/50 transition-colors">
-                        <img
+                      <div className="relative h-12 w-12 rounded-lg bg-secondary/50 overflow-hidden shrink-0 border border-border/30 group-hover:border-border/50 transition-colors">
+                        <Image
                           src={productImages[p.id] || p.images[0]}
                           alt=""
+                          fill
+                          sizes="48px"
                           className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 ${!inStock ? "grayscale opacity-60" : ""}`}
                         />
                       </div>

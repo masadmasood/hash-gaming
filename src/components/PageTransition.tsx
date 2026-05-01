@@ -1,12 +1,16 @@
+"use client";
+
 import { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function PageTransition({ children }: { children: ReactNode }) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 16, filter: "blur(6px)" }}
+      animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      transition={{ type: "spring", stiffness: 260, damping: 30, mass: 0.8 }}
     >
       {children}
     </motion.div>

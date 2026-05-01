@@ -1,5 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Search, Menu, ChevronDown, Keyboard, Mouse, Headphones } from "lucide-react";
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { ShoppingBag, Search, Menu, ChevronDown, Keyboard, Mouse, Headphones } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -16,14 +21,14 @@ const shopCategories = [
 
 export function Header() {
   const { totalItems } = useCart();
-  const location = useLocation();
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
-  const megaTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const megaTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMegaEnter = () => {
-    clearTimeout(megaTimeout.current);
+    if (megaTimeout.current) clearTimeout(megaTimeout.current);
     setMegaOpen(true);
   };
   const handleMegaLeave = () => {
@@ -32,20 +37,20 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-background/70 backdrop-blur-xl">
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-border/10 bg-transparent backdrop-blur-md transition-colors duration-200 hover:bg-background/40">
         <div className="container h-full flex items-center justify-between gap-6">
-          <Link to="/" className="shrink-0">
+          <Link href="/" className="shrink-0">
             {/* <span className="text-xl font-gaming-black tracking-tight text-foreground">
               HASHTECH
             </span> */}
-            <img src={logo} alt="Hashtech" className="size-16 object-cover" />
+            <Image src={logo} alt="Hashtech" width={64} height={64} className="size-16 object-cover" priority />
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
             <Link
-              to="/"
-              className={`text-sm font-medium transition-colors ${
-                location.pathname === "/" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              href="/"
+              className={`rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
+                pathname === "/" ? "text-foreground bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
               }`}
             >
               Home
@@ -56,20 +61,20 @@ export function Header() {
               onMouseLeave={handleMegaLeave}
             >
               <Link
-                to="/shop"
-                className={`text-sm font-medium transition-colors flex items-center gap-1 ${
-                  location.pathname === "/shop" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                href="/shop"
+                className={`flex items-center gap-1 rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
+                  pathname === "/shop" ? "text-foreground bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                 }`}
               >
                 Shop <ChevronDown className="h-3.5 w-3.5" />
               </Link>
               {megaOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
-                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-card p-1 w-[200px] space-y-0.5">
+                  <div className="bg-card/95 backdrop-blur-xl border border-border rounded-card p-1 w-50 space-y-0.5">
                     {shopCategories.map((cat) => (
                       <Link
                         key={cat.name}
-                        to={cat.to}
+                        href={cat.to}
                         onClick={() => setMegaOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 rounded-button text-sm text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
                       >
@@ -82,46 +87,70 @@ export function Header() {
               )}
             </div>
             <Link
-              to="/about"
-              className={`text-sm font-medium transition-colors ${
-                location.pathname === "/about" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              href="/about"
+              className={`rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
+                pathname === "/about" ? "text-foreground bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
               }`}
             >
               About
             </Link>
             <Link
-              to="/contact"
-              className={`text-sm font-medium transition-colors ${
-                location.pathname === "/contact" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              href="/contact"
+              className={`rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
+                pathname === "/contact" ? "text-foreground bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
               }`}
             >
               Contact
             </Link>
           </nav>
 
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" onClick={() => setSearchOpen(true)} className="text-muted-foreground hover:text-foreground hover:bg-transparent">
-              <Search className="h-5 w-5" />
-            </Button>
+          <div className="flex items-center gap-2">
+            {pathname === "/" && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSearchOpen(true)}
+                className="h-9 w-9 rounded-full border border-border/40 bg-transparent p-2 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-white/5 hover:text-foreground active:scale-95"
+                aria-label="Open search"
+              >
+                <Search className="h-5 w-5" />
+              </Button>
+            )}
 
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground hover:bg-transparent">
-                <ShoppingCart className="h-5 w-5" />
-                {totalItems > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-foreground text-background text-[10px] font-bold flex items-center justify-center p-0 border-0">
-                    {totalItems}
-                  </Badge>
-                )}
+            <Link href="/cart">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative h-9 w-9 rounded-full border border-border/40 bg-transparent p-2 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-white/5 hover:text-foreground active:scale-95"
+                aria-label="Open cart"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                <AnimatePresence>
+                  {totalItems > 0 && (
+                    <motion.span
+                      key={totalItems}
+                      initial={{ scale: 0.7, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.7, opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 24 }}
+                      className="absolute -top-1 -right-1"
+                    >
+                      <Badge className="h-5 w-5 rounded-full border border-white/20 bg-white/15 p-0 text-[10px] font-bold text-foreground shadow-sm backdrop-blur-md flex items-center justify-center">
+                        {totalItems}
+                      </Badge>
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </Button>
             </Link>
 
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:bg-transparent">
+                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full border border-border/40 bg-transparent p-2 text-muted-foreground transition-all duration-200 hover:border-foreground/20 hover:bg-white/5 hover:text-foreground">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-card border-border w-[280px]">
+              <SheetContent side="right" className="bg-card border-border w-70">
                 <div className="flex flex-col gap-6 pt-8">
                   <nav className="flex flex-col gap-1">
                     {[
@@ -132,10 +161,10 @@ export function Header() {
                     ].map((link) => (
                       <Link
                         key={link.to}
-                        to={link.to}
+                        href={link.to}
                         onClick={() => setMobileOpen(false)}
                         className={`px-4 py-3 rounded-button text-sm font-medium transition-colors ${
-                          location.pathname === link.to
+                          pathname === link.to
                             ? "text-foreground bg-surface"
                             : "text-muted-foreground hover:text-foreground hover:bg-surface"
                         }`}
@@ -151,7 +180,7 @@ export function Header() {
         </div>
       </header>
       <div className="h-16" />
-      <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />
+      {pathname === "/" && <SearchModal open={searchOpen} onOpenChange={setSearchOpen} />}
     </>
   );
 }
